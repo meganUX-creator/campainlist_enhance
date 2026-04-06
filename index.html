@@ -151,7 +151,9 @@
         <div class="drawer-header">
             <h2 id="drawerTitle">预览图片</h2>
             <div class="drawer-actions">
-                <button class="btn-cancel" onclick="closeAssetDrawer()">取消</button>
+                <button class="btn-cancel" onclick="closeAssetDrawer()">
+                    取消 <i class="ph ph-arrow-square-out"></i>
+                </button>
                 <button class="btn-confirm" onclick="saveAssets()">确认</button>
             </div>
         </div>
@@ -169,10 +171,10 @@
                 <thead>
                     <tr>
                         <th>语系</th>
-                        <th>充值页 PC端列表图片</th>
-                        <th>充值页 PC端内容图片</th>
-                        <th>充值页 H5端列表图片</th>
-                        <th>充值页 H5端内容图片</th>
+                        <th>PC端列表图片</th>
+                        <th>PC端内容图片</th>
+                        <th>H5端列表图片</th>
+                        <th>H5端内容图片</th>
                     </tr>
                 </thead>
                 <tbody id="assetTableBody">

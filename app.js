@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             rechargeType: '银行转账',
             minRechargeAmount: '5,000',
             minRechargeCount: '1',
-            rechargeSort: '1',
+            rechargeSort: '--',
             pcImage: 'pc_preview.png',
             h5Image: 'h5_preview.png'
         },
@@ -245,10 +245,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     </button>
                 </td>
                 <td class="preview-detail">
-                    ${item.rechargeSort !== '--' && item.rechargeSort ? `<img src="pc_list.png" class="thumbnail-preview" alt="PC Preview">` : '--'}
+                    ${item.rechargeSort !== '--' && item.rechargeSort && item.template !== '救援金活动' ? `<img src="pc_list.png" class="thumbnail-preview" alt="PC Preview">` : '--'}
                 </td>
                 <td class="preview-detail">
-                    ${item.rechargeSort !== '--' && item.rechargeSort ? `<img src="h5_list.png" class="thumbnail-preview" alt="H5 Preview">` : '--'}
+                    ${item.rechargeSort !== '--' && item.rechargeSort && item.template !== '救援金活动' ? `<img src="h5_list.png" class="thumbnail-preview" alt="H5 Preview">` : '--'}
                 </td>
                 <td>${item.blacklist}</td>
                 <td>${item.designatedAgent}</td>
