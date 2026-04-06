@@ -404,14 +404,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Render mock assets based on campaign languages
         const languages = campaign.language ? campaign.language.split(' ') : ['未知'];
-        assetTableBody.innerHTML = languages.map((lang, index) => {
-            // For demonstration based on screenshot: 
-            // In the "英文" row (index 0 if multiple), make the first cell empty
-            const isEnglishRow = lang === '英文' || lang === '英语' || index === 0;
+        assetTableBody.innerHTML = languages.map((lang) => {
+            // For demonstration based on screenshot for ID 50458:
+            // "英文" row shows a placeholder for the first cell, "越南" row shows images.
+            const isEnglishPlaceholder = campaign.id === '50458' && (lang === '英文' || lang === '英语');
+            
             return `
                 <tr>
                     <td>${lang}</td>
-                    <td>${renderAssetCard(isEnglishRow ? null : 'pc_list.png', 'pc_list.png')}</td>
+                    <td>${renderAssetCard(isEnglishPlaceholder ? null : 'pc_list.png', 'pc_list.png')}</td>
                     <td>${renderAssetCard('pc_content.png', 'pc_content.png')}</td>
                     <td>${renderAssetCard('h5_list.png', 'h5_list.png')}</td>
                     <td>${renderAssetCard('h5_content.png', 'h5_content.png')}</td>
