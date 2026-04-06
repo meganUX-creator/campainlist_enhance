@@ -5,19 +5,19 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '50454',
             sort: 'SY1',
             status: 'active',
-            type: '系統 (有專頁)',
+            type: '系统 (有专页)',
             period: '26/04/01 至 51/01/01',
             currency: 'VND',
             language: '越南',
-            template: '救援金活動',
-            name: '救援金周結算星期一',
+            template: '救援金活动',
+            name: '救援金周结算星期一',
             preview: true,
             blacklist: '--',
             designatedAgent: '--',
             winCount: '0/2',
             withdrawRatio: '100%',
             auditFailFee: '100%',
-            rechargeType: '銀行轉賬',
+            rechargeType: '银行转账',
             minRechargeAmount: '5,000',
             minRechargeCount: '1',
             rechargeSort: '1',
@@ -28,11 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '50458',
             sort: 'CU1',
             status: 'active',
-            type: '自定義',
+            type: '自定义',
             period: '26/03/18 至 50/12/31',
             currency: 'VND',
             language: '英文 越南',
-            template: '自定義模板',
+            template: '自定义模板',
             name: '1234444443',
             preview: true,
             blacklist: '--',
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             winCount: '0/0',
             withdrawRatio: '--',
             auditFailFee: '--',
-            rechargeType: '銀行轉賬',
+            rechargeType: '银行转账',
             minRechargeAmount: '5,000',
             minRechargeCount: '1',
             rechargeSort: '--',
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             period: '26/03/23 至 51/01/01',
             currency: 'VND',
             language: '越南',
-            template: '救援金活動',
+            template: '救援金活动',
             name: '救援金-百分比 0',
             preview: true,
             blacklist: '--',
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             winCount: '374/8',
             withdrawRatio: '--',
             auditFailFee: '100%',
-            rechargeType: '銀行轉賬',
+            rechargeType: '银行转账',
             minRechargeAmount: '5,000',
             minRechargeCount: '1',
             rechargeSort: '--',
@@ -74,19 +74,19 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '50465',
             sort: 'SN1',
             status: 'active',
-            type: '系統 (無專頁)',
+            type: '系统 (无专页)',
             period: '26/04/10 至 51/01/01',
             currency: 'VND',
             language: '簡體中文',
-            template: '簽到活動',
-            name: '每日簽到獎勵',
+            template: '签到活动',
+            name: '每日签到奖励',
             preview: false,
             blacklist: '--',
             designatedAgent: '--',
             winCount: '120/5',
             withdrawRatio: '50%',
             auditFailFee: '--',
-            rechargeType: '銀行轉賬',
+            rechargeType: '银行转账',
             minRechargeAmount: '5,000',
             minRechargeCount: '1',
             rechargeSort: '--',
@@ -101,15 +101,15 @@ document.addEventListener('DOMContentLoaded', () => {
             period: '26/05/01 至 51/01/01',
             currency: 'VND',
             language: '越南',
-            template: '紅包活動',
-            name: '節日紅包雨',
+            template: '红包活动',
+            name: '节日红包雨',
             preview: true,
             blacklist: '--',
             designatedAgent: '--',
             winCount: '500/10',
             withdrawRatio: '100%',
             auditFailFee: '100%',
-            rechargeType: '銀行轉賬',
+            rechargeType: '银行转账',
             minRechargeAmount: '5,000',
             minRechargeCount: '1',
             rechargeSort: '--',
@@ -120,19 +120,19 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '50475',
             sort: 'CU2',
             status: 'active',
-            type: '自定義',
+            type: '自定义',
             period: '26/06/01 至 50/12/31',
             currency: 'VND',
-            language: '英語 越南',
-            template: '自定義模板2',
-            name: '特殊促銷案',
+            language: '英语 越南',
+            template: '自定义模板2',
+            name: '特殊促销案',
             preview: true,
             blacklist: '--',
             designatedAgent: '--',
             winCount: '50/0',
             withdrawRatio: '--',
             auditFailFee: '--',
-            rechargeType: '銀行轉賬',
+            rechargeType: '银行转账',
             minRechargeAmount: '5,000',
             minRechargeCount: '1',
             rechargeSort: '--',
@@ -143,19 +143,19 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '50480',
             sort: 'SN2',
             status: 'inactive',
-            type: '系統 (無專頁)',
+            type: '系统 (无专页)',
             period: '26/07/01 至 51/01/01',
             currency: 'VND',
             language: '越南',
-            template: '救援金活動',
-            name: '已關閉的舊活動',
+            template: '救援金活动',
+            name: '已关闭的旧活动',
             preview: false,
             blacklist: '--',
             designatedAgent: '--',
             winCount: '0/0',
             withdrawRatio: '--',
             auditFailFee: '--',
-            rechargeType: '銀行轉賬',
+            rechargeType: '银行转账',
             minRechargeAmount: '5,000',
             minRechargeCount: '1',
             rechargeSort: '--',
@@ -171,14 +171,14 @@ document.addEventListener('DOMContentLoaded', () => {
             currency: 'VND',
             language: '越南',
             template: '充值返利',
-            name: '週六充值大放送',
+            name: '周六充值大放送',
             preview: true,
             blacklist: '--',
             designatedAgent: '--',
             winCount: '1000/20',
             withdrawRatio: '100%',
             auditFailFee: '100%',
-            rechargeType: '銀行轉賬/USDT',
+            rechargeType: '银行转账/USDT',
             minRechargeAmount: '20,000',
             minRechargeCount: '1',
             rechargeSort: '1'
@@ -190,9 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
             type: '系統 (有專頁)',
             period: '26/09/01 至 51/01/01',
             currency: 'VND',
-            language: '英語',
+            language: '英语',
             template: '充值返利',
-            name: '月底充值大回饋',
+            name: '月底充值大回馈',
             preview: true,
             blacklist: '--',
             designatedAgent: '--',
@@ -212,9 +212,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Code Mapping for Sorting (English Char + Number)
     const typeWeights = {
-        '自定義': 'CU1',
-        '系統 (有專頁)': 'SY1',
-        '系統 (無專頁)': 'SN1'
+        '自定义': 'CU1',
+        '系统 (有专页)': 'SY1',
+        '系统 (无专页)': 'SN1'
     };
 
     const tableBody = document.getElementById('campaignTableBody');
@@ -223,8 +223,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderTable = (data) => {
         tableBody.innerHTML = '';
         data.forEach(item => {
-            const badgeClass = item.type === '系統 (有專頁)' ? 'badge-system' : 
-                              item.type === '系統 (無專頁)' ? 'badge-system-none' : 'badge-custom';
+            const badgeClass = item.type === '系统 (有专页)' ? 'badge-system' : 
+                              item.type === '系统 (无专页)' ? 'badge-system-none' : 'badge-custom';
             const statusClass = item.status === 'active' ? 'status-active' : 'status-inactive';
             const statusIcon = item.status === 'active' ? 'ph ph-check' : 'ph ph-x';
             const row = document.createElement('tr');
@@ -261,10 +261,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td class="recharge-detail">${item.rechargeSort || '--'}</td>
                 <td>
                     <div class="row-actions">
-                        <span class="action-btn btn-close">關閉</span>
-                        <span class="action-btn btn-copy">複製</span>
-                        <span class="action-btn btn-edit">編輯</span>
-                        <span class="action-btn btn-delete">刪除</span>
+                        <span class="action-btn btn-close">关闭</span>
+                        <span class="action-btn btn-copy">复制</span>
+                        <span class="action-btn btn-edit">编辑</span>
+                        <span class="action-btn btn-delete">删除</span>
                     </div>
                 </td>
             `;
@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Mock Button Interactions
     document.getElementById('addCampaign').addEventListener('click', () => {
-        alert('新增活動觸發 - 你可以開發一個彈窗來新增活動！');
+        alert('新增活动触发 - 你可以开发一个弹窗来新增活动！');
     });
 
     document.getElementById('refreshPage').addEventListener('click', () => {
@@ -422,7 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.saveAssets = () => {
-        alert('資產已保存！');
+        alert('资产已保存！');
         closeAssetDrawer();
     };
 

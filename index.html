@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>活動列表 | Campaign List</title>
+    <title>活动列表 | Campaign List</title>
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,11 +16,11 @@
     <div class="app-container">
         <!-- Header Actions -->
         <header class="page-header">
-            <h1 class="page-title">活動列表</h1>
+            <h1 class="page-title">活动列表</h1>
             <div class="header-actions">
                 <button class="btn btn-primary" id="addCampaign">
                     <i class="ph ph-plus"></i>
-                    新增活動
+                    新增活动
                 </button>
                 <button class="btn btn-secondary" id="refreshPage">
                     <i class="ph ph-arrows-clockwise"></i>
@@ -34,7 +34,7 @@
             <div class="filter-header" id="toggleFilter">
                 <div class="filter-title">
                     <i class="ph ph-magnifying-glass"></i>
-                    <span>篩選條件</span>
+                    <span>筛选条件</span>
                 </div>
                 <i class="ph ph-caret-up toggle-icon"></i>
             </div>
@@ -43,22 +43,22 @@
                 <div class="filter-grid">
                     <div class="filter-item">
                         <select class="form-select">
-                            <option value="">狀態</option>
+                            <option value="">状态</option>
                             <option value="all">全部</option>
-                            <option value="active">開啟</option>
-                            <option value="inactive">關閉</option>
+                            <option value="active">开启</option>
+                            <option value="inactive">关闭</option>
                         </select>
                     </div>
                     <div class="filter-item">
                         <select class="form-select">
-                            <option value="">活動模板</option>
+                            <option value="">活动模板</option>
                         </select>
                     </div>
                     <div class="filter-item">
-                        <input type="text" class="form-input" placeholder="活動ID">
+                        <input type="text" class="form-input" placeholder="活动ID">
                     </div>
                     <div class="filter-item">
-                        <input type="text" class="form-input" placeholder="活動名稱">
+                        <input type="text" class="form-input" placeholder="活动名称">
                     </div>
                     <div class="filter-item">
                         <select class="form-select">
@@ -70,24 +70,24 @@
                         <select class="form-select">
                             <option value="">全部語系</option>
                             <option value="zh">簡體中文</option>
-                            <option value="vi">越南語</option>
-                            <option value="en">英語</option>
+                            <option value="vi">越南语</option>
+                            <option value="en">英语</option>
                         </select>
                     </div>
                     <div class="filter-item">
                         <select class="form-select">
-                            <option value="">模板類型</option>
-                            <option value="SY">系統 (有專頁)</option>
-                            <option value="SN">系統 (無專頁)</option>
-                            <option value="CU">自定義</option>
+                            <option value="">模板类型</option>
+                            <option value="SY">系统 (有专页)</option>
+                            <option value="SN">系统 (无专页)</option>
+                            <option value="CU">自定义</option>
                         </select>
                     </div>
                     <div class="filter-item full-width">
                         <div class="date-range">
                             <i class="ph ph-calendar-blank"></i>
-                            <input type="text" class="form-input" placeholder="開始日期">
+                            <input type="text" class="form-input" placeholder="开始日期">
                             <span class="separator">~</span>
-                            <input type="text" class="form-input" placeholder="結束日期">
+                            <input type="text" class="form-input" placeholder="结束日期">
                         </div>
                     </div>
                 </div>
@@ -97,12 +97,12 @@
                         <label class="custom-checkbox">
                             <input type="checkbox">
                             <span class="checkmark"></span>
-                            僅顯示長期活動
+                            仅显示长期活动
                         </label>
                     </div>
                     <div class="filter-buttons">
                         <button class="btn btn-warning">重置</button>
-                        <button class="btn btn-info">查詢</button>
+                        <button class="btn btn-info">查询</button>
                     </div>
                 </div>
             </div>
@@ -116,24 +116,24 @@
                         <tr>
                             <th class="sortable" data-sort="id">ID <i class="ph ph-caret-up-down"></i></th>
                             <th class="sortable" data-sort="sort">排序 <i class="ph ph-caret-up-down"></i></th>
-                            <th>狀態</th>
-                            <th class="sortable" data-sort="type">模板類型 <i class="ph ph-caret-up-down"></i></th>
-                            <th class="sortable" data-sort="period">起止時間 <i class="ph ph-caret-up-down"></i></th>
-                            <th>幣種</th>
-                            <th>語系</th>
-                            <th>活動模板</th>
-                            <th>活動名稱</th>
-                            <th class="expand-header" id="previewPlusToggle">預覽圖片 <i class="ph ph-plus-circle"></i></th>
-                            <th class="preview-detail">充值頁 PC 圖片</th>
-                            <th class="preview-detail">充值頁 H5 圖片</th>
-                            <th>黑名單層級</th>
+                            <th>状态</th>
+                            <th class="sortable" data-sort="type">模板类型 <i class="ph ph-caret-up-down"></i></th>
+                            <th class="sortable" data-sort="period">起止时间 <i class="ph ph-caret-up-down"></i></th>
+                            <th>币种</th>
+                            <th>语系</th>
+                            <th>活动模板</th>
+                            <th>活动名称</th>
+                            <th class="expand-header" id="previewPlusToggle">预览图片 <i class="ph ph-plus-circle"></i></th>
+                            <th class="preview-detail">充值页 PC 图片</th>
+                            <th class="preview-detail">充值页 H5 图片</th>
+                            <th>黑名单层级</th>
                             <th>指定代理</th>
-                            <th>到達 / 中獎人數</th>
-                            <th>提現稽核流水比例</th>
-                            <th>稽核不通過手續費比例</th>
-                            <th class="expand-header" id="rechargeToggle">充值類型 <i class="ph ph-plus-circle"></i></th>
-                            <th class="recharge-detail">最低充值金額</th>
-                            <th class="recharge-detail">最低充值次數</th>
+                            <th>到达 / 中奖人数</th>
+                            <th>提现稽核流水比例</th>
+                            <th>稽核不通过手续费比例</th>
+                            <th class="expand-header" id="rechargeToggle">充值类型 <i class="ph ph-plus-circle"></i></th>
+                            <th class="recharge-detail">最低充值金额</th>
+                            <th class="recharge-detail">最低充值次数</th>
                             <th class="recharge-detail sortable" data-sort="rechargeSort">充值排序 <i class="ph ph-caret-up-down"></i></th>
                             <th>操作</th>
                         </tr>
@@ -149,30 +149,30 @@
     <!-- Asset Management Drawer -->
     <div id="assetDrawer" class="asset-drawer">
         <div class="drawer-header">
-            <h2 id="drawerTitle">預覽圖片</h2>
+            <h2 id="drawerTitle">预览图片</h2>
             <div class="drawer-actions">
                 <button class="btn-cancel" onclick="closeAssetDrawer()">取消</button>
-                <button class="btn-confirm" onclick="saveAssets()">確認</button>
+                <button class="btn-confirm" onclick="saveAssets()">确认</button>
             </div>
         </div>
         <div class="drawer-content">
             <div class="campaign-info-grid">
-                <div class="info-item"><span>前台顯示名稱</span><p id="infoName">--</p></div>
+                <div class="info-item"><span>前台显示名称</span><p id="infoName">--</p></div>
                 <div class="info-item"><span>ID</span><p id="infoId">--</p></div>
-                <div class="info-item"><span>類型</span><p id="infoType">--</p></div>
-                <div class="info-item"><span>時間</span><p id="infoTime">--</p></div>
-                <div class="info-item"><span>模板類型</span><p id="infoTemplate">--</p></div>
-                <div class="info-item"><span>幣種</span><p id="infoCurrency">--</p></div>
+                <div class="info-item"><span>类型</span><p id="infoType">--</p></div>
+                <div class="info-item"><span>时间</span><p id="infoTime">--</p></div>
+                <div class="info-item"><span>模板类型</span><p id="infoTemplate">--</p></div>
+                <div class="info-item"><span>币种</span><p id="infoCurrency">--</p></div>
             </div>
             
             <table class="asset-table">
                 <thead>
                     <tr>
-                        <th>語系</th>
-                        <th>充值頁 PC端列表圖片</th>
-                        <th>充值頁 PC端內容圖片</th>
-                        <th>充值頁 H5端列表圖片</th>
-                        <th>充值頁 H5端內容圖片</th>
+                        <th>语系</th>
+                        <th>充值页 PC端列表图片</th>
+                        <th>充值页 PC端内容图片</th>
+                        <th>充值页 H5端列表图片</th>
+                        <th>充值页 H5端内容图片</th>
                     </tr>
                 </thead>
                 <tbody id="assetTableBody">
