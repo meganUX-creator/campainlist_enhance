@@ -404,15 +404,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Render mock assets based on campaign languages
         const languages = campaign.language ? campaign.language.split(' ') : ['未知'];
-        assetTableBody.innerHTML = languages.map(lang => `
-            <tr>
-                <td>${lang}</td>
-                <td>${renderAssetCard('pc_list.png', 'pc_list.png')}</td>
-                <td>${renderAssetCard('pc_content.png', 'pc_content.png')}</td>
-                <td>${renderAssetCard('h5_list.png', 'h5_list.png')}</td>
-                <td>${renderAssetCard('h5_content.png', 'h5_content.png')}</td>
-            </tr>
-        `).join('');
+        assetTableBody.innerHTML = languages.map((lang, index) => {
+            // For demonstration based on screenshot: 
+            // In the "英文" row (index 0 if multiple), make the first cell empty
+            const isEnglishRow = lang === '英文' || lang === '英语' || index === 0;
+            return `
+                <tr>
+                    <td>${lang}</td>
+                    <td>${renderAssetCard(isEnglishRow ? null : 'pc_list.png', 'pc_list.png')}</td>
+                    <td>${renderAssetCard('pc_content.png', 'pc_content.png')}</td>
+                    <td>${renderAssetCard('h5_list.png', 'h5_list.png')}</td>
+                    <td>${renderAssetCard('h5_content.png', 'h5_content.png')}</td>
+                </tr>
+            `;
+        }).join('');
 
         assetDrawer.classList.add('open');
     };
@@ -427,14 +432,33 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function renderAssetCard(src, filename) {
+        if (!src) {
+            return `
+                <div class="asset-card">
+                    <div class="asset-placeholder">
+                        <i class="ph ph-cloud-arrow-up"></i>
+                        <span>上传图片</span>
+                        <small>PNG/JPG &le; 1MB</small>
+                    </div>
+                    <input type="text" class="asset-url-input" value="" placeholder="图片 URL">
+                </div>
+            `;
+        }
         return `
             <div class="asset-card">
-                <span class="btn-delete-asset">&times;</span>
-                <img src="${src}" alt="${filename}">
-                <input type="text" class="asset-url-input" value="${src}" placeholder="圖片 URL">
+                <button class="btn-delete-asset" onclick="this.parentElement.remove()">&times;</button>
+                <img src="${src}" alt="${filename}" onclick="window.openImageModal('${src}')">
+                <input type="text" class="asset-url-input" value="${src}" placeholder="图片 URL">
             </div>
         `;
     }
+
+    window.openImageModal = (src) => {
+        const imageModal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        imageModal.style.display = 'block';
+        modalImg.src = src;
+    };
 
     // Image Modal Logic
     const imageModal = document.getElementById('imageModal');
