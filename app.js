@@ -402,8 +402,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('infoTemplate').textContent = campaign.template;
         document.getElementById('infoCurrency').textContent = campaign.currency;
 
-        // Render mock assets
-        const languages = ['越南']; 
+        // Render mock assets based on campaign languages
+        const languages = campaign.language ? campaign.language.split(' ') : ['未知'];
         assetTableBody.innerHTML = languages.map(lang => `
             <tr>
                 <td>${lang}</td>
