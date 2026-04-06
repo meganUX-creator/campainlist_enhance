@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活動列表 | Campaign List</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header Actions -->
+        <header class="page-header">
+            <h1 class="page-title">活動列表</h1>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="addCampaign">
+                    <i class="ph ph-plus"></i>
+                    新增活動
+                </button>
+                <button class="btn btn-secondary" id="refreshPage">
+                    <i class="ph ph-arrows-clockwise"></i>
+                    刷新
+                </button>
+            </div>
+        </header>
+
+        <!-- Search / Filter Section -->
+        <section class="filter-section card" id="filterSection">
+            <div class="filter-header" id="toggleFilter">
+                <div class="filter-title">
+                    <i class="ph ph-magnifying-glass"></i>
+                    <span>篩選條件</span>
+                </div>
+                <i class="ph ph-caret-up toggle-icon"></i>
+            </div>
+            
+            <div class="filter-body">
+                <div class="filter-grid">
+                    <div class="filter-item">
+                        <select class="form-select">
+                            <option value="">狀態</option>
+                            <option value="all">全部</option>
+                            <option value="active">開啟</option>
+                            <option value="inactive">關閉</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <select class="form-select">
+                            <option value="">活動模板</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <input type="text" class="form-input" placeholder="活動ID">
+                    </div>
+                    <div class="filter-item">
+                        <input type="text" class="form-input" placeholder="活動名稱">
+                    </div>
+                    <div class="filter-item">
+                        <select class="form-select">
+                            <option value="VND" selected>VND</option>
+                            <option value="USD">USD</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <select class="form-select">
+                            <option value="">全部語系</option>
+                            <option value="zh">簡體中文</option>
+                            <option value="vi">越南語</option>
+                            <option value="en">英語</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <select class="form-select">
+                            <option value="">模板類型</option>
+                            <option value="SY">系統 (有專頁)</option>
+                            <option value="SN">系統 (無專頁)</option>
+                            <option value="CU">自定義</option>
+                        </select>
+                    </div>
+                    <div class="filter-item full-width">
+                        <div class="date-range">
+                            <i class="ph ph-calendar-blank"></i>
+                            <input type="text" class="form-input" placeholder="開始日期">
+                            <span class="separator">~</span>
+                            <input type="text" class="form-input" placeholder="結束日期">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-footer">
+                    <div class="checkbox-group">
+                        <label class="custom-checkbox">
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                            僅顯示長期活動
+                        </label>
+                    </div>
+                    <div class="filter-buttons">
+                        <button class="btn btn-warning">重置</button>
+                        <button class="btn btn-info">查詢</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Table Section -->
+        <section class="table-section card">
+            <div class="table-container">
+                <table class="data-table" id="campaignTable">
+                    <thead>
+                        <tr>
+                            <th class="sortable" data-sort="id">ID <i class="ph ph-caret-up-down"></i></th>
+                            <th class="sortable" data-sort="sort">排序 <i class="ph ph-caret-up-down"></i></th>
+                            <th>狀態</th>
+                            <th class="sortable" data-sort="type">模板類型 <i class="ph ph-caret-up-down"></i></th>
+                            <th class="sortable" data-sort="period">起止時間 <i class="ph ph-caret-up-down"></i></th>
+                            <th>幣種</th>
+                            <th>語系</th>
+                            <th>活動模板</th>
+                            <th>活動名稱</th>
+                            <th class="expand-header" id="previewPlusToggle">預覽圖片 <i class="ph ph-plus-circle"></i></th>
+                            <th class="preview-detail">充值頁 PC 圖片</th>
+                            <th class="preview-detail">充值頁 H5 圖片</th>
+                            <th>黑名單層級</th>
+                            <th>指定代理</th>
+                            <th>到達 / 中獎人數</th>
+                            <th>提現稽核流水比例</th>
+                            <th>稽核不通過手續費比例</th>
+                            <th class="expand-header" id="rechargeToggle">充值類型 <i class="ph ph-plus-circle"></i></th>
+                            <th class="recharge-detail">最低充值金額</th>
+                            <th class="recharge-detail">最低充值次數</th>
+                            <th class="recharge-detail sortable" data-sort="rechargeSort">充值排序 <i class="ph ph-caret-up-down"></i></th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="campaignTableBody">
+                        <!-- Rows will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Asset Management Drawer -->
+    <div id="assetDrawer" class="asset-drawer">
+        <div class="drawer-header">
+            <h2 id="drawerTitle">預覽圖片</h2>
+            <div class="drawer-actions">
+                <button class="btn-cancel" onclick="closeAssetDrawer()">取消</button>
+                <button class="btn-confirm" onclick="saveAssets()">確認</button>
+            </div>
+        </div>
+        <div class="drawer-content">
+            <div class="campaign-info-grid">
+                <div class="info-item"><span>前台顯示名稱</span><p id="infoName">--</p></div>
+                <div class="info-item"><span>ID</span><p id="infoId">--</p></div>
+                <div class="info-item"><span>類型</span><p id="infoType">--</p></div>
+                <div class="info-item"><span>時間</span><p id="infoTime">--</p></div>
+                <div class="info-item"><span>模板類型</span><p id="infoTemplate">--</p></div>
+                <div class="info-item"><span>幣種</span><p id="infoCurrency">--</p></div>
+            </div>
+            
+            <table class="asset-table">
+                <thead>
+                    <tr>
+                        <th>語系</th>
+                        <th>充值頁 PC端列表圖片</th>
+                        <th>充值頁 PC端內容圖片</th>
+                        <th>充值頁 H5端列表圖片</th>
+                        <th>充值頁 H5端內容圖片</th>
+                    </tr>
+                </thead>
+                <tbody id="assetTableBody">
+                    <!-- Assets will be rendered here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="imageModal" class="image-modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
