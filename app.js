@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '50458',
             sort: 'CU1',
             status: 'active',
-            type: '系统',
+            type: '自定义',
             period: '26/03/18 至 50/12/31',
             currency: 'VND',
             language: '英文 越南',
@@ -210,11 +210,22 @@ document.addEventListener('DOMContentLoaded', () => {
     let isRechargeExpanded = false;
     let sortConfig = { key: null, direction: 'asc' };
 
-    // Code Mapping for Sorting (English Char + Number)
-    const typeWeights = {
-        '自定义': 'CU1',
-        '系统 (有专页)': 'SY1',
-        '系统 (无专页)': 'SN1'
+    // Code Mapping for Sorting (Priority: SY > SN > CU, then trailing number ascending)
+    const getSortWeight = (str) => {
+        if (!str) return 999999;
+        let weight = 0;
+        // Check exact prefix or type match
+        if (str.includes('SY') || str.includes('有')) weight = 100000;
+        else if (str.includes('SN') || str.includes('无') || str.includes('無')) weight = 200000;
+        else if (str.includes('CU') || str.includes('自')) weight = 300000;
+        else weight = 900000;
+
+        // Parse and add numeric trailing part
+        const numMatch = str.match(/\d+/);
+        if (numMatch) {
+            weight += parseInt(numMatch[0], 10);
+        }
+        return weight;
     };
 
     const tableBody = document.getElementById('campaignTableBody');
@@ -223,8 +234,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderTable = (data) => {
         tableBody.innerHTML = '';
         data.forEach(item => {
-            const badgeClass = item.type === '系统 (有专页)' ? 'badge-system' : 
-                              item.type === '系统 (无专页)' ? 'badge-system-none' : 'badge-custom';
+            let badgeClass = 'badge-custom'; // 默认为自定义颜色
+            let displayType = '自定义';
+            
+            if (item.type.includes('有')) {
+                badgeClass = 'badge-system'; // 有专页颜色 (浅绿色)
+                displayType = '系統（有专页）';
+            } else if (item.type.includes('无') || item.type.includes('無')) {
+                badgeClass = 'badge-system-none'; // 无专页颜色 (浅蓝色)
+                displayType = '系統（无专页）';
+            }
+            
             const statusClass = item.status === 'active' ? 'status-active' : 'status-inactive';
             const statusIcon = item.status === 'active' ? 'ph ph-check' : 'ph ph-x';
             const row = document.createElement('tr');
@@ -232,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${item.id}</td>
                 <td>${item.sort}</td>
                 <td><div class="${statusClass}"><i class="${statusIcon}"></i></div></td>
-                <td><span class="badge ${badgeClass}">${item.type}</span></td>
+                <td><span class="badge ${badgeClass}">${displayType}</span></td>
                 <td style="font-size: 11px;">${item.period}</td>
                 <td>${item.currency}</td>
                 <td>${item.language}</td>
@@ -272,6 +292,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Default Sort rules
+    campaigns.sort((a, b) => getSortWeight(a.sort) - getSortWeight(b.sort));
     renderTable(campaigns);
 
     // Sorting Logic
@@ -305,10 +327,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     valB = parseFloat(valB) || 0;
                 }
                 
-                // Alphanumeric sort for 'sort' or weighted sort for 'type'
-                if (key === 'type') {
-                    valA = typeWeights[valA] || 'Z9';
-                    valB = typeWeights[valB] || 'Z9';
+                // Weighted sort for 'type' and 'sort'
+                if (key === 'type' || key === 'sort') {
+                    valA = getSortWeight(valA);
+                    valB = getSortWeight(valB);
                 }
 
                 if (key === 'rechargeSort') {
