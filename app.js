@@ -334,6 +334,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Track current tab (promotion or featured)
     let currentTab = 'promotion';
+    
+    // Separate data storage for each tab to keep them independent
+    let promotionData = [];
+    let featuredData = [];
 
     // Render Table Rows
     const renderTable = (data) => {
@@ -373,7 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${item.currency}</td>
             <td>${item.language}</td>
             <td><span class="badge ${badgeClass}">${displayType}</span></td>
-            <td class="hidden-col">${item.activityType || '-'}</td>
+            ${currentTab === 'promotion' ? `<td class="hidden-col">${item.activityType || '-'}</td>` : ''}
             <td class="hidden-col"><span class="sort-number" data-id="${item.id}">${item.displaySort}</span></td>
             <td>${item.template}</td>
             <td>${item.name}</td>
@@ -425,21 +429,30 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.appendChild(row);
     };
 
-    // Function to get current tab filtered data
-    const getCurrentTabData = () => {
-        return campaigns.filter(item => {
+    // Function to initialize separate data for each tab
+    const initializeTabData = () => {
+        // Filter and store data separately for each tab
+        promotionData = campaigns.filter(item => {
             const { group } = getTypeDisplay(item.type);
-            if (currentTab === 'featured') {
-                return group === 'sy';
-            } else {
-                return group === 'mixed';
-            }
-        });
+            return group === 'mixed';
+        }).map(item => ({...item})); // Create copies to keep independent
+        
+        featuredData = campaigns.filter(item => {
+            const { group } = getTypeDisplay(item.type);
+            return group === 'sy';
+        }).map(item => ({...item})); // Create copies to keep independent
     };
 
-    // Initial render with promotion tab data (exclude SY)
-    let currentTabData = getCurrentTabData();
-    renderTable(currentTabData);
+    // Function to get current tab data
+    const getCurrentTabData = () => {
+        return currentTab === 'featured' ? featuredData : promotionData;
+    };
+
+    // Initialize data for both tabs
+    initializeTabData();
+
+    // Initial render with promotion tab data
+    renderTable(promotionData);
 
     // Sorting Logic
     const headers = document.querySelectorAll('th.sortable');
@@ -461,11 +474,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const activeIcon = header.querySelector('i');
             activeIcon.className = sortConfig.direction === 'asc' ? 'ph ph-caret-up' : 'ph ph-caret-down';
 
-            // Get current tab data and sort it
-            const dataToSort = getCurrentTabData();
+            // Get current tab data and create a copy to sort (keep original data unchanged)
+            const dataToSort = [...getCurrentTabData()];
             
             // Perform Sort on current tab data only
-            const sortedData = [...dataToSort].sort((a, b) => {
+            const sortedData = dataToSort.sort((a, b) => {
                 let valA = a[key];
                 let valB = b[key];
 
@@ -546,7 +559,7 @@ document.addEventListener('DOMContentLoaded', () => {
         icon.classList.add('ph-spin');
         setTimeout(() => {
             icon.classList.remove('ph-spin');
-            renderTable(campaigns);
+            renderTable(getCurrentTabData());
         }, 800);
     });
 
@@ -909,6 +922,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (templateTypeFilterItem) {
             templateTypeFilterItem.style.display = currentTab === 'promotion' ? 'block' : 'none';
         }
+
+        // Show/hide activity type column based on tab (hide for featured tab)
+        const activityTypeHeader = document.getElementById('activityTypeHeader');
+        if (activityTypeHeader) {
+            activityTypeHeader.style.display = currentTab === 'promotion' ? 'table-cell' : 'none';
+        }
     };
 
     // Function to disable/enable activity template based on template type selection
@@ -957,9 +976,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Update activity template dropdown options
             updateActivityTemplateOptions();
 
-            // Get filtered data for new tab and render
-            const filteredByTab = getCurrentTabData();
-            renderTable(filteredByTab);
+            // Get data for new tab and render (each tab has independent data)
+            const tabData = getCurrentTabData();
+            renderTable(tabData);
         });
     });
 
