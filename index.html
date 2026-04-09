@@ -321,6 +321,30 @@
         <img class="modal-content" id="modalImg">
     </div>
 
+    <!-- Image Upload Modal for PC/H5 -->
+    <div id="uploadImageModal" class="upload-modal">
+        <div class="upload-modal-content">
+            <h3 id="uploadModalTitle">上传图片</h3>
+            <div class="upload-form">
+                <div class="upload-row">
+                    <label class="upload-label" id="uploadLabel">pc图片:</label>
+                    <div class="upload-controls">
+                        <button class="btn btn-select-file" onclick="selectFile()">
+                            <i class="ph ph-file"></i>
+                            选取文件
+                        </button>
+                        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/gif,image/webp" hidden>
+                        <input type="text" class="form-input upload-url" id="urlInput" placeholder="或输入图片链接">
+                    </div>
+                </div>
+                <p class="upload-hint">只能上传jpg/png/gif/webp文件，且不超过2MB</p>
+            </div>
+            <div class="upload-actions">
+                <button class="btn btn-confirm-upload" onclick="confirmUpload()">确定</button>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>

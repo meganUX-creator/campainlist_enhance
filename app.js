@@ -381,10 +381,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 </button>
             </td>
             <td class="preview-detail">
-                ${item.rechargeSort !== '--' && item.rechargeSort && item.template !== '救援金活动' ? `<img src="pc_list.png" class="thumbnail-preview" alt="PC Preview">` : '--'}
+                ${item.template === '充值優惠活動' ? `
+                    <div class="image-upload-wrapper">
+                        <img src="pc_list.png" class="thumbnail-preview" alt="PC Preview">
+                        <button class="btn-upload-plus" onclick="openImageUpload('${item.id}', 'pc')">
+                            <i class="ph ph-plus"></i>
+                        </button>
+                    </div>
+                ` : '--'}
             </td>
             <td class="preview-detail">
-                ${item.rechargeSort !== '--' && item.rechargeSort && item.template !== '救援金活动' ? `<img src="h5_list.png" class="thumbnail-preview" alt="H5 Preview">` : '--'}
+                ${item.template === '充值優惠活動' ? `
+                    <div class="image-upload-wrapper">
+                        <img src="h5_list.png" class="thumbnail-preview" alt="H5 Preview">
+                        <button class="btn-upload-plus" onclick="openImageUpload('${item.id}', 'h5')">
+                            <i class="ph ph-plus"></i>
+                        </button>
+                    </div>
+                ` : '--'}
             </td>
             <td>${item.blacklist}</td>
             <td>${item.designatedAgent}</td>
@@ -395,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <td class="recharge-detail">${item.template === '充值優惠活動' ? item.minRechargeAmount : '--'}</td>
             <td class="recharge-detail">${item.template === '充值優惠活動' ? item.minRechargeCount : '--'}</td>
             <td class="recharge-detail">${item.template === '充值優惠活動' ? (item.rechargeCategory || '--') : '--'}</td>
-            <td class="recharge-detail">${item.template === '充值優惠活動' ? (item.rechargeSort || '--') : '--'}</td>
+            <td class="recharge-detail">${item.template === '充值優惠活動' ? (item.rechargeSort ? `<span class="recharge-sort-number">${item.rechargeSort}</span>` : '--') : '--'}</td>
             <td>
                 <div class="row-actions">
                     <span class="action-btn btn-close">关闭</span>
@@ -560,6 +574,74 @@ document.addEventListener('DOMContentLoaded', () => {
     // Asset Drawer Logic
     const assetDrawer = document.getElementById('assetDrawer');
     const assetTableBody = document.getElementById('assetTableBody');
+
+    window.openImageUpload = (id, type) => {
+        const campaign = campaigns.find(c => c.id === id);
+        if (!campaign) return;
+        
+        const typeLabel = type === 'pc' ? 'PC' : 'H5';
+        const labelText = type === 'pc' ? 'pc图片:' : 'h5图片:';
+        
+        // Update modal content
+        document.getElementById('uploadModalTitle').textContent = `上傳${typeLabel}圖片`;
+        document.getElementById('uploadLabel').textContent = labelText;
+        
+        // Store current upload info
+        window.currentUpload = { id, type };
+        
+        // Reset form
+        document.getElementById('fileInput').value = '';
+        document.getElementById('urlInput').value = '';
+        
+        // Show modal
+        const modal = document.getElementById('uploadImageModal');
+        modal.classList.add('show');
+    };
+
+    // File input change handler
+    document.getElementById('fileInput')?.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 2 * 1024 * 1024) {
+                alert('文件大小不能超過2MB');
+                e.target.value = '';
+                return;
+            }
+            // Show file name in URL input
+            document.getElementById('urlInput').value = file.name;
+        }
+    });
+
+    // Select file button handler
+    window.selectFile = () => {
+        document.getElementById('fileInput').click();
+    };
+
+    // Confirm upload handler
+    window.confirmUpload = () => {
+        const urlInput = document.getElementById('urlInput').value;
+        const fileInput = document.getElementById('fileInput');
+        
+        if (!urlInput && !fileInput.files[0]) {
+            alert('請選擇文件或輸入圖片連結');
+            return;
+        }
+        
+        const { id, type } = window.currentUpload || {};
+        console.log(`Uploading ${type} image for campaign ${id}:`, urlInput || fileInput.files[0]?.name);
+        
+        // Close modal
+        document.getElementById('uploadImageModal').classList.remove('show');
+        
+        alert('上傳成功！');
+    };
+
+    // Close modal on outside click
+    document.getElementById('uploadImageModal')?.addEventListener('click', (e) => {
+        if (e.target.id === 'uploadImageModal') {
+            document.getElementById('uploadImageModal').classList.remove('show');
+        }
+    });
 
     window.openAssetDrawer = (id) => {
         const campaign = campaigns.find(c => c.id === id);
