@@ -55,43 +55,17 @@
                                 <span id="templateTypeText">請選擇模板類型</span>
                                 <i class="ph ph-caret-down"></i>
                             </div>
-                            <div class="multi-select-dropdown" id="templateTypeDropdown">
-                                <div class="multi-select-option select-all">
-                                    <label class="multi-select-checkbox">
-                                        <input type="checkbox" id="templateTypeSelectAll">
-                                        <span class="checkmark"></span>
-                                        <span class="option-text">全選</span>
-                                    </label>
-                                </div>
-                                <div class="multi-select-divider"></div>
-                                <div class="multi-select-option">
-                                    <label class="multi-select-checkbox">
-                                        <input type="checkbox" value="SY" class="template-type-option">
-                                        <span class="checkmark"></span>
-                                        <span class="option-text">系統（有专页）</span>
-                                    </label>
-                                </div>
-                                <div class="multi-select-option">
-                                    <label class="multi-select-checkbox">
-                                        <input type="checkbox" value="SN" class="template-type-option">
-                                        <span class="checkmark"></span>
-                                        <span class="option-text">系統（无专页）</span>
-                                    </label>
-                                </div>
-                                <div class="multi-select-option">
-                                    <label class="multi-select-checkbox">
-                                        <input type="checkbox" value="CU" class="template-type-option">
-                                        <span class="checkmark"></span>
-                                        <span class="option-text">自定义</span>
-                                    </label>
-                                </div>
-                            </div>
+                            <!-- Dropdown moved to portal -->
                         </div>
                     </div>
                     <div class="filter-item">
-                        <select class="form-select" id="activityTemplateFilter" disabled>
-                            <option value="">活动模板</option>
-                        </select>
+                        <div class="multi-select" id="activityTemplateFilterContainer">
+                            <div class="multi-select-trigger" id="activityTemplateTrigger">
+                                <span id="activityTemplateText">請選擇活動模板</span>
+                                <i class="ph ph-caret-down"></i>
+                            </div>
+                            <!-- Dropdown moved to portal -->
+                        </div>
                     </div>
                     <div class="filter-item">
                         <input type="text" class="form-input" placeholder="活动ID">
@@ -168,6 +142,139 @@
                 </table>
             </div>
         </section>
+    </div>
+
+    <!-- Dropdown Portal for Template Type -->
+    <div class="dropdown-portal" id="templateTypePortal">
+        <div class="multi-select-dropdown portal-dropdown" id="templateTypeDropdown">
+            <div class="multi-select-option select-all">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" id="templateTypeSelectAll">
+                    <span class="checkmark"></span>
+                    <span class="option-text">全選</span>
+                </label>
+            </div>
+            <div class="multi-select-divider"></div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="SY" class="template-type-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">系統（有专页）</span>
+                </label>
+            </div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="SN" class="template-type-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">系統（无专页）</span>
+                </label>
+            </div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="CU" class="template-type-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">自定义</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dropdown Portal for Activity Template -->
+    <div class="dropdown-portal" id="activityTemplatePortal">
+        <div class="multi-select-dropdown portal-dropdown" id="activityTemplateDropdown">
+            <div class="multi-select-option select-all">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" id="activityTemplateSelectAll">
+                    <span class="checkmark"></span>
+                    <span class="option-text">全選</span>
+                </label>
+            </div>
+            <div class="multi-select-divider"></div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="连续性活动" class="activity-template-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">连续性活动</span>
+                </label>
+            </div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="每天登录活动" class="activity-template-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">每天登录活动</span>
+                </label>
+            </div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="砸金蛋活动" class="activity-template-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">砸金蛋活动</span>
+                </label>
+            </div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="救援金活动" class="activity-template-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">救援金活动</span>
+                </label>
+            </div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="充值優惠活動" class="activity-template-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">充值優惠活動</span>
+                </label>
+            </div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="注册礼金活动" class="activity-template-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">注册礼金活动</span>
+                </label>
+            </div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="三方对局数彩金活动" class="activity-template-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">三方对局数彩金活动</span>
+                </label>
+            </div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="三方盈利彩金活动" class="activity-template-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">三方盈利彩金活动</span>
+                </label>
+            </div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="周充值优惠活动" class="activity-template-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">周充值优惠活动</span>
+                </label>
+            </div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="彩票下注期数奖金活动" class="activity-template-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">彩票下注期数奖金活动</span>
+                </label>
+            </div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="下载有奖" class="activity-template-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">下载有奖</span>
+                </label>
+            </div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="定期宝箱" class="activity-template-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">定期宝箱</span>
+                </label>
+            </div>
+        </div>
     </div>
 
     <!-- Asset Management Drawer -->

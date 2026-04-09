@@ -661,7 +661,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const templateTypeText = document.getElementById('templateTypeText');
     const templateTypeSelectAll = document.getElementById('templateTypeSelectAll');
     const templateTypeOptions = document.querySelectorAll('.template-type-option');
-    const activityTemplateFilter = document.getElementById('activityTemplateFilter');
+    const activityTemplateFilterContainer = document.getElementById('activityTemplateFilterContainer');
+    const activityTemplateTrigger = document.getElementById('activityTemplateTrigger');
+    const activityTemplateText = document.getElementById('activityTemplateText');
+    const activityTemplateDropdown = document.getElementById('activityTemplateDropdown');
+    const activityTemplateSelectAll = document.getElementById('activityTemplateSelectAll');
+    const activityTemplateOptions = document.querySelectorAll('.activity-template-option');
 
     // Template mapping based on type
     const templateMapping = {
@@ -670,9 +675,20 @@ document.addEventListener('DOMContentLoaded', () => {
         'CU': []
     };
 
-    // Toggle dropdown
+    // Position and toggle template type dropdown
+    const positionTemplateTypeDropdown = () => {
+        const rect = templateTypeTrigger.getBoundingClientRect();
+        const scrollX = window.scrollX || window.pageXOffset;
+        const scrollY = window.scrollY || window.pageYOffset;
+        templateTypeDropdown.style.left = (rect.left + scrollX) + 'px';
+        templateTypeDropdown.style.top = (rect.bottom + scrollY) + 'px';
+        templateTypeDropdown.style.width = rect.width + 'px';
+        templateTypeDropdown.style.position = 'fixed';
+    };
+
     templateTypeTrigger.addEventListener('click', (e) => {
         e.stopPropagation();
+        positionTemplateTypeDropdown();
         templateTypeDropdown.classList.toggle('open');
         templateTypeTrigger.classList.toggle('active');
     });
@@ -691,7 +707,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateTemplateTypeText = () => {
         const checkedOptions = document.querySelectorAll('.template-type-option:checked');
         if (checkedOptions.length === 0) {
-            templateTypeText.textContent = '請選擇';
+            templateTypeText.textContent = '請選擇模板類型';
         } else if (checkedOptions.length === templateTypeOptions.length) {
             templateTypeText.textContent = `已選擇全部`;
         } else {
@@ -699,34 +715,64 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Update activity template dropdown based on selected types
-    const updateActivityTemplate = () => {
-        const selectedTypes = Array.from(document.querySelectorAll('.template-type-option:checked')).map(opt => opt.value);
-
-        // Clear current options
-        activityTemplateFilter.innerHTML = '<option value="">活动模板</option>';
-
-        // Collect all templates from selected types
-        const allTemplates = new Set();
-        selectedTypes.forEach(type => {
-            const templates = templateMapping[type] || [];
-            templates.forEach(t => allTemplates.add(t));
-        });
-
-        if (allTemplates.size > 0) {
-            // Enable dropdown and populate options
-            activityTemplateFilter.disabled = false;
-            allTemplates.forEach(template => {
-                const option = document.createElement('option');
-                option.value = template;
-                option.textContent = template;
-                activityTemplateFilter.appendChild(option);
-            });
+    // Update activity template trigger text
+    const updateActivityTemplateText = () => {
+        const checkedOptions = document.querySelectorAll('.activity-template-option:checked');
+        if (checkedOptions.length === 0) {
+            activityTemplateText.textContent = '請選擇活動模板';
+        } else if (checkedOptions.length === activityTemplateOptions.length) {
+            activityTemplateText.textContent = `已選擇全部`;
         } else {
-            // Disable if no templates available (no type selected or only custom selected)
-            activityTemplateFilter.disabled = true;
+            activityTemplateText.textContent = `已選擇 ${checkedOptions.length} 項`;
         }
     };
+
+    // Position and toggle activity template dropdown
+    const positionActivityTemplateDropdown = () => {
+        const rect = activityTemplateTrigger.getBoundingClientRect();
+        const scrollX = window.scrollX || window.pageXOffset;
+        const scrollY = window.scrollY || window.pageYOffset;
+        activityTemplateDropdown.style.left = (rect.left + scrollX) + 'px';
+        activityTemplateDropdown.style.top = (rect.bottom + scrollY) + 'px';
+        activityTemplateDropdown.style.width = rect.width + 'px';
+        activityTemplateDropdown.style.position = 'fixed';
+    };
+
+    activityTemplateTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        positionActivityTemplateDropdown();
+        activityTemplateDropdown.classList.toggle('open');
+        activityTemplateTrigger.classList.toggle('active');
+    });
+
+    // Close activity template dropdown when clicking outside
+    document.addEventListener('click', () => {
+        activityTemplateDropdown.classList.remove('open');
+        activityTemplateTrigger.classList.remove('active');
+    });
+
+    activityTemplateDropdown.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+
+    // Handle activity template select all
+    activityTemplateSelectAll.addEventListener('change', () => {
+        activityTemplateOptions.forEach(opt => {
+            opt.checked = activityTemplateSelectAll.checked;
+        });
+        updateActivityTemplateText();
+    });
+
+    // Handle individual activity template options
+    activityTemplateOptions.forEach(option => {
+        option.addEventListener('change', () => {
+            const allChecked = Array.from(activityTemplateOptions).every(opt => opt.checked);
+            const someChecked = Array.from(activityTemplateOptions).some(opt => opt.checked);
+            activityTemplateSelectAll.checked = allChecked;
+            activityTemplateSelectAll.indeterminate = someChecked && !allChecked;
+            updateActivityTemplateText();
+        });
+    });
 
     // Handle select all
     templateTypeSelectAll.addEventListener('change', () => {
@@ -768,7 +814,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Query button - filter data based on selected criteria
     queryFilter.addEventListener('click', () => {
         const selectedTypes = Array.from(document.querySelectorAll('.template-type-option:checked')).map(opt => opt.value);
-        const selectedTemplate = activityTemplateFilter.value;
+        const selectedTemplates = Array.from(document.querySelectorAll('.activity-template-option:checked')).map(opt => opt.value);
         const selectedStatus = statusFilter.value;
 
         let filteredData = [...campaigns];
@@ -783,9 +829,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Filter by activity template
-        if (selectedTemplate) {
-            filteredData = filteredData.filter(item => item.template === selectedTemplate);
+        // Filter by activity template (multi-select)
+        if (selectedTemplates.length > 0) {
+            filteredData = filteredData.filter(item => selectedTemplates.includes(item.template));
         }
 
         // Filter by status
@@ -805,9 +851,11 @@ document.addEventListener('DOMContentLoaded', () => {
         templateTypeSelectAll.indeterminate = false;
         updateTemplateTypeText();
 
-        // Clear activity template
-        activityTemplateFilter.innerHTML = '<option value="">活动模板</option>';
-        activityTemplateFilter.disabled = true;
+        // Clear activity template multi-select
+        activityTemplateOptions.forEach(opt => opt.checked = false);
+        activityTemplateSelectAll.checked = false;
+        activityTemplateSelectAll.indeterminate = false;
+        updateActivityTemplateText();
 
         // Clear status
         statusFilter.value = '';

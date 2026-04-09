@@ -807,6 +807,32 @@ table[data-preview-expanded="true"] .preview-detail {
     display: block;
 }
 
+/* Dropdown Portal for positioning dropdowns outside of overflow containers */
+.dropdown-portal {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+}
+
+.portal-dropdown {
+    position: fixed;
+    z-index: 10000;
+    display: none;
+    margin-top: 4px;
+    max-height: 300px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    min-width: 200px;
+}
+
+.portal-dropdown.open {
+    display: block;
+}
+
 .multi-select-option {
     padding: 10px 14px;
     cursor: pointer;
