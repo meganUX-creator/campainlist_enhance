@@ -412,11 +412,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${item.winCount}</td>
             <td>${item.withdrawRatio}</td>
             <td>${item.auditFailFee}</td>
-            <td class="recharge-type">${item.template === '充值優惠活動' ? item.rechargeType : '--'}</td>
-            <td class="recharge-detail">${item.template === '充值優惠活動' ? item.minRechargeAmount : '--'}</td>
-            <td class="recharge-detail">${item.template === '充值優惠活動' ? item.minRechargeCount : '--'}</td>
-            <td class="recharge-detail">${item.template === '充值優惠活動' ? (item.rechargeCategory || '--') : '--'}</td>
-            <td class="recharge-detail">${item.template === '充值優惠活動' ? (item.rechargeSort ? `<span class="recharge-sort-number">${item.rechargeSort}</span>` : '--') : '--'}</td>
+            <td class="recharge-type" ${currentTab !== 'promotion' ? 'style="display:none"' : ''}>${item.template === '充值優惠活動' ? item.rechargeType : '--'}</td>
+            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none"' : ''}>${item.template === '充值優惠活動' ? item.minRechargeAmount : '--'}</td>
+            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none"' : ''}>${item.template === '充值優惠活動' ? item.minRechargeCount : '--'}</td>
+            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none"' : ''}>${item.template === '充值優惠活動' ? (item.rechargeCategory || '--') : '--'}</td>
+            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none"' : ''}>${item.template === '充值優惠活動' ? (item.rechargeSort ? `<span class="recharge-sort-number">${item.rechargeSort}</span>` : '--') : '--'}</td>
             <td>
                 <div class="row-actions">
                     <span class="action-btn btn-close">关闭</span>
@@ -931,6 +931,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activityTypeHeader) {
             activityTypeHeader.style.display = currentTab === 'promotion' ? 'table-cell' : 'none';
         }
+
+        // Show/hide recharge columns based on tab (hide for featured tab)
+        const rechargeToggle = document.getElementById('rechargeToggle');
+        const rechargeMinAmountHeader = document.getElementById('rechargeMinAmountHeader');
+        const rechargeMinCountHeader = document.getElementById('rechargeMinCountHeader');
+        const rechargeCategoryHeader = document.getElementById('rechargeCategoryHeader');
+        const rechargeSortHeader = document.getElementById('rechargeSortHeader');
+        
+        const display = currentTab === 'promotion' ? 'table-cell' : 'none';
+        if (rechargeToggle) rechargeToggle.style.display = display;
+        if (rechargeMinAmountHeader) rechargeMinAmountHeader.style.display = display;
+        if (rechargeMinCountHeader) rechargeMinCountHeader.style.display = display;
+        if (rechargeCategoryHeader) rechargeCategoryHeader.style.display = display;
+        if (rechargeSortHeader) rechargeSortHeader.style.display = display;
     };
 
     // Function to disable/enable activity template based on template type selection
