@@ -331,20 +331,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderTable = (data) => {
         tableBody.innerHTML = '';
 
-        // Track counters for each group independently (display as 1,2,3...)
-        let syCount = 0;      // 有專頁
-        let mixedCount = 0;   // 無專頁 + 自定義
-
-        // Assign independent sort numbers per template type group
+        // Display actual sort values to show sorting effect
         data.forEach(item => {
-            const { group } = getTypeDisplay(item.type);
-            if (group === 'sy') {
-                syCount++;
-                item.displaySort = syCount;
-            } else {
-                mixedCount++;
-                item.displaySort = mixedCount;
-            }
+            item.displaySort = item.sort;
             renderRow(item);
         });
 
@@ -454,10 +443,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     valB = getSortWeight(valB);
                 }
 
+                // Numeric sort for 'sort' column
+                if (key === 'sort') {
+                    const valANum = parseFloat(valA) || 0;
+                    const valBNum = parseFloat(valB) || 0;
+                    return sortConfig.direction === 'asc' ? valANum - valBNum : valBNum - valANum;
+                }
+
                 if (key === 'rechargeSort') {
                     const aEmpty = a[key] === '--' || !a[key];
                     const bEmpty = b[key] === '--' || !b[key];
-                    
+
                     if (aEmpty && bEmpty) return 0;
                     if (aEmpty) return 1;
                     if (bEmpty) return -1;
