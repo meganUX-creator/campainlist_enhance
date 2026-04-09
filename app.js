@@ -466,13 +466,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 sortConfig.direction = 'asc';
             }
 
-            // Update Icons
+            // Update Icons (skip templateTypeExpand which uses plus/minus)
             headers.forEach(h => {
+                if (h.id === 'templateTypeExpand') return; // Skip template type expand header
                 const icon = h.querySelector('i');
-                icon.className = 'ph ph-caret-up-down';
+                if (icon) icon.className = 'ph ph-caret-up-down';
             });
             const activeIcon = header.querySelector('i');
-            activeIcon.className = sortConfig.direction === 'asc' ? 'ph ph-caret-up' : 'ph ph-caret-down';
+            if (header.id !== 'templateTypeExpand' && activeIcon) {
+                activeIcon.className = sortConfig.direction === 'asc' ? 'ph ph-caret-up' : 'ph ph-caret-down';
+            }
 
             // Get current tab data and create a copy to sort (keep original data unchanged)
             const dataToSort = [...getCurrentTabData()];
@@ -969,6 +972,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sortConfig.key = null;
             sortConfig.direction = 'asc';
             headers.forEach(h => {
+                if (h.id === 'templateTypeExpand') return; // Skip template type expand header
                 const icon = h.querySelector('i');
                 if (icon) icon.className = 'ph ph-caret-up-down';
             });
