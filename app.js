@@ -187,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
             withdrawRatio: '100%',
             auditFailFee: '100%',
             rechargeType: '银行转账/USDT',
+            rechargeCategory: '首充',
             minRechargeAmount: '20,000',
             minRechargeCount: '1',
             rechargeSort: '1'
@@ -209,6 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
             withdrawRatio: '100%',
             auditFailFee: '100%',
             rechargeType: 'USDT',
+            rechargeCategory: '累充',
             minRechargeAmount: '100,000',
             minRechargeCount: '2',
             rechargeSort: '2'
@@ -231,6 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
             withdrawRatio: '100%',
             auditFailFee: '100%',
             rechargeType: '银行转账',
+            rechargeCategory: '首充',
             minRechargeAmount: '50,000',
             minRechargeCount: '1',
             rechargeSort: '3'
@@ -253,6 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
             withdrawRatio: '100%',
             auditFailFee: '100%',
             rechargeType: 'USDT/銀行轉帳',
+            rechargeCategory: '累充',
             minRechargeAmount: '200,000',
             minRechargeCount: '5',
             rechargeSort: '4'
@@ -275,6 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
             withdrawRatio: '--',
             auditFailFee: '--',
             rechargeType: '银行转账',
+            rechargeCategory: '限时',
             minRechargeAmount: '30,000',
             minRechargeCount: '1',
             rechargeSort: '5'
@@ -389,6 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <td class="recharge-type">${item.template === '充值優惠活動' ? item.rechargeType : '--'}</td>
             <td class="recharge-detail">${item.template === '充值優惠活動' ? item.minRechargeAmount : '--'}</td>
             <td class="recharge-detail">${item.template === '充值優惠活動' ? item.minRechargeCount : '--'}</td>
+            <td class="recharge-detail">${item.template === '充值優惠活動' ? (item.rechargeCategory || '--') : '--'}</td>
             <td class="recharge-detail">${item.template === '充值優惠活動' ? (item.rechargeSort || '--') : '--'}</td>
             <td>
                 <div class="row-actions">
