@@ -381,31 +381,27 @@ document.addEventListener('DOMContentLoaded', () => {
             <td class="hidden-col"><span class="sort-number" data-id="${item.id}">${item.displaySort}</span></td>
             <td>${item.template}</td>
             <td>${item.name}</td>
-            <td>
+            <td class="preview-images-cell">
                 <button class="btn btn-upload" onclick="openAssetDrawer('${item.id}')">
                     <i class="ph ph-upload-simple"></i>
                     上傳
                 </button>
-            </td>
-            <td class="preview-detail">
                 ${item.template === '充值優惠活動' ? `
+                <div class="preview-images-wrapper">
                     <div class="image-upload-wrapper">
                         <img src="pc_list.png" class="thumbnail-preview" alt="PC Preview">
                         <button class="btn-upload-plus" onclick="openImageUpload('${item.id}', 'pc')">
                             <i class="ph ph-plus"></i>
                         </button>
                     </div>
-                ` : '--'}
-            </td>
-            <td class="preview-detail">
-                ${item.template === '充值優惠活動' ? `
                     <div class="image-upload-wrapper">
                         <img src="h5_list.png" class="thumbnail-preview" alt="H5 Preview">
                         <button class="btn-upload-plus" onclick="openImageUpload('${item.id}', 'h5')">
                             <i class="ph ph-plus"></i>
                         </button>
                     </div>
-                ` : '--'}
+                </div>
+                ` : ''}
             </td>
             <td>${item.blacklist}</td>
             <td>${item.designatedAgent}</td>
