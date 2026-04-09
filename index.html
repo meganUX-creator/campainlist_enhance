@@ -16,7 +16,15 @@
     <div class="app-container">
         <!-- Header Actions -->
         <header class="page-header">
-            <h1 class="page-title">活动列表</h1>
+            <h1 class="page-title"></h1>
+        </header>
+        
+        <!-- Tab Navigation and Actions Row -->
+        <div class="header-toolbar">
+            <div class="tab-navigation header-tabs">
+                <button class="tab-btn active" data-tab="promotion">優惠活動</button>
+                <button class="tab-btn" data-tab="featured">推薦精選活動</button>
+            </div>
             <div class="header-actions">
                 <button class="btn btn-primary" id="addCampaign" onclick="window.open('https://lunar-aroma-66559924.figma.site/', '_blank')">
                     <i class="ph ph-plus"></i>
@@ -27,7 +35,7 @@
                     刷新
                 </button>
             </div>
-        </header>
+        </div>
 
         <!-- Search / Filter Section -->
         <section class="filter-section card" id="filterSection">
@@ -49,14 +57,12 @@
                             <option value="inactive">关闭</option>
                         </select>
                     </div>
-                    <div class="filter-item">
-                        <div class="multi-select" id="templateTypeFilterContainer">
-                            <div class="multi-select-trigger" id="templateTypeTrigger">
-                                <span id="templateTypeText">請選擇模板類型</span>
-                                <i class="ph ph-caret-down"></i>
-                            </div>
-                            <!-- Dropdown moved to portal -->
-                        </div>
+                    <div class="filter-item" id="templateTypeFilterItem" style="display: none;">
+                        <select class="form-select" id="templateTypeFilter">
+                            <option value="">模板類型</option>
+                            <option value="CU">自定義</option>
+                            <option value="SN">系統（无专页）</option>
+                        </select>
                     </div>
                     <div class="filter-item">
                         <div class="multi-select" id="activityTemplateFilterContainer">
@@ -143,41 +149,6 @@
                 </table>
             </div>
         </section>
-    </div>
-
-    <!-- Dropdown Portal for Template Type -->
-    <div class="dropdown-portal" id="templateTypePortal">
-        <div class="multi-select-dropdown portal-dropdown" id="templateTypeDropdown">
-            <div class="multi-select-option select-all">
-                <label class="multi-select-checkbox">
-                    <input type="checkbox" id="templateTypeSelectAll">
-                    <span class="checkmark"></span>
-                    <span class="option-text">全選</span>
-                </label>
-            </div>
-            <div class="multi-select-divider"></div>
-            <div class="multi-select-option">
-                <label class="multi-select-checkbox">
-                    <input type="checkbox" value="SY" class="template-type-option">
-                    <span class="checkmark"></span>
-                    <span class="option-text">系統（有专页）</span>
-                </label>
-            </div>
-            <div class="multi-select-option">
-                <label class="multi-select-checkbox">
-                    <input type="checkbox" value="SN" class="template-type-option">
-                    <span class="checkmark"></span>
-                    <span class="option-text">系統（无专页）</span>
-                </label>
-            </div>
-            <div class="multi-select-option">
-                <label class="multi-select-checkbox">
-                    <input type="checkbox" value="CU" class="template-type-option">
-                    <span class="checkmark"></span>
-                    <span class="option-text">自定义</span>
-                </label>
-            </div>
-        </div>
     </div>
 
     <!-- Dropdown Portal for Activity Template -->
@@ -275,6 +246,13 @@
                     <span class="option-text">定期宝箱</span>
                 </label>
             </div>
+            <div class="multi-select-option">
+                <label class="multi-select-checkbox">
+                    <input type="checkbox" value="自定义" class="activity-template-option">
+                    <span class="checkmark"></span>
+                    <span class="option-text">自定义</span>
+                </label>
+            </div>
         </div>
     </div>
 
@@ -340,6 +318,7 @@
                 <p class="upload-hint">只能上传jpg/png/gif/webp文件，且不超过2MB</p>
             </div>
             <div class="upload-actions">
+                <button class="btn btn-cancel" onclick="closeUploadModal()">取消</button>
                 <button class="btn btn-confirm-upload" onclick="confirmUpload()">确定</button>
             </div>
         </div>

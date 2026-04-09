@@ -332,6 +332,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Track if activity type and sort columns are expanded
     let isTemplateColumnsExpanded = false;
 
+    // Track current tab (promotion or featured)
+    let currentTab = 'promotion';
+
     // Render Table Rows
     const renderTable = (data) => {
         tableBody.innerHTML = '';
@@ -422,9 +425,21 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.appendChild(row);
     };
 
-    // Default Sort rules
-    campaigns.sort((a, b) => getSortWeight(a.sort) - getSortWeight(b.sort));
-    renderTable(campaigns);
+    // Function to get current tab filtered data
+    const getCurrentTabData = () => {
+        return campaigns.filter(item => {
+            const { group } = getTypeDisplay(item.type);
+            if (currentTab === 'featured') {
+                return group === 'sy';
+            } else {
+                return group === 'mixed';
+            }
+        });
+    };
+
+    // Initial render with promotion tab data (exclude SY)
+    let currentTabData = getCurrentTabData();
+    renderTable(currentTabData);
 
     // Sorting Logic
     const headers = document.querySelectorAll('th.sortable');
@@ -446,8 +461,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const activeIcon = header.querySelector('i');
             activeIcon.className = sortConfig.direction === 'asc' ? 'ph ph-caret-up' : 'ph ph-caret-down';
 
-            // Perform Sort
-            const sortedData = [...campaigns].sort((a, b) => {
+            // Get current tab data and sort it
+            const dataToSort = getCurrentTabData();
+            
+            // Perform Sort on current tab data only
+            const sortedData = [...dataToSort].sort((a, b) => {
                 let valA = a[key];
                 let valB = b[key];
 
@@ -636,6 +654,11 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('上傳成功！');
     };
 
+    // Cancel upload handler
+    window.closeUploadModal = () => {
+        document.getElementById('uploadImageModal').classList.remove('show');
+    };
+
     // Close modal on outside click
     document.getElementById('uploadImageModal')?.addEventListener('click', (e) => {
         if (e.target.id === 'uploadImageModal') {
@@ -743,12 +766,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Template Type & Activity Template Cascading Dropdown
-    const templateTypeTrigger = document.getElementById('templateTypeTrigger');
-    const templateTypeDropdown = document.getElementById('templateTypeDropdown');
-    const templateTypeText = document.getElementById('templateTypeText');
-    const templateTypeSelectAll = document.getElementById('templateTypeSelectAll');
-    const templateTypeOptions = document.querySelectorAll('.template-type-option');
+    // Template Type & Activity Template Dropdowns
+    const templateTypeFilter = document.getElementById('templateTypeFilter');
     const activityTemplateFilterContainer = document.getElementById('activityTemplateFilterContainer');
     const activityTemplateTrigger = document.getElementById('activityTemplateTrigger');
     const activityTemplateText = document.getElementById('activityTemplateText');
@@ -761,46 +780,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'SY': ['连续性活动', '每天登录活动', '砸金蛋活动', '救援金活动'],
         'SN': ['充值優惠活動', '注册礼金活动', '三方对局数彩金活动', '三方盈利彩金活动', '周充值优惠活动', '彩票下注期数奖金活动', '下载有奖', '定期宝箱'],
         'CU': []
-    };
-
-    // Position and toggle template type dropdown
-    const positionTemplateTypeDropdown = () => {
-        const rect = templateTypeTrigger.getBoundingClientRect();
-        const scrollX = window.scrollX || window.pageXOffset;
-        const scrollY = window.scrollY || window.pageYOffset;
-        templateTypeDropdown.style.left = (rect.left + scrollX) + 'px';
-        templateTypeDropdown.style.top = (rect.bottom + scrollY) + 'px';
-        templateTypeDropdown.style.width = rect.width + 'px';
-        templateTypeDropdown.style.position = 'fixed';
-    };
-
-    templateTypeTrigger.addEventListener('click', (e) => {
-        e.stopPropagation();
-        positionTemplateTypeDropdown();
-        templateTypeDropdown.classList.toggle('open');
-        templateTypeTrigger.classList.toggle('active');
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', () => {
-        templateTypeDropdown.classList.remove('open');
-        templateTypeTrigger.classList.remove('active');
-    });
-
-    templateTypeDropdown.addEventListener('click', (e) => {
-        e.stopPropagation();
-    });
-
-    // Update trigger text based on selection
-    const updateTemplateTypeText = () => {
-        const checkedOptions = document.querySelectorAll('.template-type-option:checked');
-        if (checkedOptions.length === 0) {
-            templateTypeText.textContent = '請選擇模板類型';
-        } else if (checkedOptions.length === templateTypeOptions.length) {
-            templateTypeText.textContent = `已選擇全部`;
-        } else {
-            templateTypeText.textContent = `已選擇 ${checkedOptions.length} 項`;
-        }
     };
 
     // Update activity template trigger text
@@ -862,28 +841,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Handle select all
-    templateTypeSelectAll.addEventListener('change', () => {
-        templateTypeOptions.forEach(opt => {
-            opt.checked = templateTypeSelectAll.checked;
-        });
-        updateTemplateTypeText();
-        updateActivityTemplate();
-    });
-
-    // Handle individual options
-    templateTypeOptions.forEach(option => {
-        option.addEventListener('change', () => {
-            const allChecked = Array.from(templateTypeOptions).every(opt => opt.checked);
-            const someChecked = Array.from(templateTypeOptions).some(opt => opt.checked);
-            templateTypeSelectAll.checked = allChecked;
-            templateTypeSelectAll.indeterminate = someChecked && !allChecked;
-            updateTemplateTypeText();
-            updateActivityTemplate();
-        });
-    });
-
-
     // Filter and Reset Functionality
     const resetFilter = document.getElementById('resetFilter');
     const queryFilter = document.getElementById('queryFilter');
@@ -901,19 +858,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Query button - filter data based on selected criteria
     queryFilter.addEventListener('click', () => {
-        const selectedTypes = Array.from(document.querySelectorAll('.template-type-option:checked')).map(opt => opt.value);
+        const selectedType = templateTypeFilter ? templateTypeFilter.value : '';
         const selectedTemplates = Array.from(document.querySelectorAll('.activity-template-option:checked')).map(opt => opt.value);
         const selectedStatus = statusFilter.value;
 
-        let filteredData = [...campaigns];
+        let filteredData = getCurrentTabData();
 
         // Filter by template type
-        if (selectedTypes.length > 0) {
+        if (selectedType) {
             filteredData = filteredData.filter(item => {
-                return selectedTypes.some(typeValue => {
-                    const displayTexts = getTemplateTypeDisplay(typeValue);
-                    return displayTexts.some(text => item.type.includes(text) || item.type === text);
-                });
+                const typeMap = { 'CU': '自定义', 'SN': '系统 (无专页)' };
+                return item.type === typeMap[selectedType];
             });
         }
 
@@ -922,33 +877,92 @@ document.addEventListener('DOMContentLoaded', () => {
             filteredData = filteredData.filter(item => selectedTemplates.includes(item.template));
         }
 
-        // Filter by status
-        if (selectedStatus && selectedStatus !== 'all') {
-            filteredData = filteredData.filter(item => item.status === selectedStatus);
-        }
-
-        // Re-render with filtered data
+        // Re-render filtered data
         renderTable(filteredData);
     });
 
-    // Reset button - clear filters and show all data
-    resetFilter.addEventListener('click', () => {
-        // Clear template type selection
-        templateTypeOptions.forEach(opt => opt.checked = false);
-        templateTypeSelectAll.checked = false;
-        templateTypeSelectAll.indeterminate = false;
-        updateTemplateTypeText();
-
-        // Clear activity template multi-select
-        activityTemplateOptions.forEach(opt => opt.checked = false);
-        activityTemplateSelectAll.checked = false;
-        activityTemplateSelectAll.indeterminate = false;
+    // Function to update activity template dropdown options based on tab
+    const updateActivityTemplateOptions = () => {
+        const featuredTemplates = ['连续性活动', '每天登录活动', '砸金蛋活动', '救援金活动'];
+        // 優惠活動 - removed '自定义'
+        const promotionTemplates = ['充值優惠活動', '注册礼金活动', '三方对局数彩金活动', '三方盈利彩金活动', '周充值优惠活动', '彩票下注期数奖金活动', '下载有奖', '定期宝箱'];
+        
+        const templatesToShow = currentTab === 'featured' ? featuredTemplates : promotionTemplates;
+        
+        // Update all options visibility
+        const allOptions = document.querySelectorAll('.activity-template-option');
+        allOptions.forEach(option => {
+            const optionContainer = option.closest('.multi-select-option');
+            if (templatesToShow.includes(option.value)) {
+                optionContainer.style.display = 'block';
+            } else {
+                optionContainer.style.display = 'none';
+                option.checked = false; // Uncheck hidden options
+            }
+        });
+        
+        // Update text
         updateActivityTemplateText();
 
-        // Clear status
-        statusFilter.value = '';
+        // Show/hide template type filter based on tab (only show for promotion tab)
+        const templateTypeFilterItem = document.getElementById('templateTypeFilterItem');
+        if (templateTypeFilterItem) {
+            templateTypeFilterItem.style.display = currentTab === 'promotion' ? 'block' : 'none';
+        }
+    };
 
-        // Re-render all data
-        renderTable(campaigns);
+    // Function to disable/enable activity template based on template type selection
+    const updateActivityTemplateState = () => {
+        const selectedType = templateTypeFilter.value;
+        if (selectedType === 'CU') {
+            // Disable activity template when '自定义' is selected
+            activityTemplateFilterContainer.classList.add('disabled');
+            activityTemplateTrigger.style.pointerEvents = 'none';
+            activityTemplateTrigger.style.opacity = '0.5';
+            activityTemplateText.textContent = '請選擇活動模板';
+            // Clear all selections
+            activityTemplateOptions.forEach(opt => opt.checked = false);
+            activityTemplateSelectAll.checked = false;
+            activityTemplateSelectAll.indeterminate = false;
+        } else {
+            // Enable activity template
+            activityTemplateFilterContainer.classList.remove('disabled');
+            activityTemplateTrigger.style.pointerEvents = 'auto';
+            activityTemplateTrigger.style.opacity = '1';
+        }
+    };
+
+    // Template type change listener
+    templateTypeFilter.addEventListener('change', updateActivityTemplateState);
+
+    // Tab Switching Logic
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active state
+            tabButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Update current tab
+            currentTab = btn.getAttribute('data-tab');
+            
+            // Reset sort when switching tabs
+            sortConfig.key = null;
+            sortConfig.direction = 'asc';
+            headers.forEach(h => {
+                const icon = h.querySelector('i');
+                if (icon) icon.className = 'ph ph-caret-up-down';
+            });
+
+            // Update activity template dropdown options
+            updateActivityTemplateOptions();
+
+            // Get filtered data for new tab and render
+            const filteredByTab = getCurrentTabData();
+            renderTable(filteredByTab);
+        });
     });
+
+    // Initial setup for activity template options
+    updateActivityTemplateOptions();
 });

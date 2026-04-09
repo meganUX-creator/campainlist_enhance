@@ -58,6 +58,14 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
+/* Header Toolbar - Tabs left, buttons right */
+.header-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
 .header-actions {
     display: flex;
     gap: 12px;
@@ -139,6 +147,64 @@ body {
 .btn-delete { color: #e74c3c; border-color: #e74c3c; }
 
 .action-btn:hover { background: #f8f9fa; transform: translateY(-1px); }
+
+/* Tab Navigation */
+.tab-navigation {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 0 4px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+    position: relative;
+}
+
+.tab-btn:hover {
+    background: var(--hover-color);
+    color: var(--text-primary);
+}
+
+.tab-btn.active {
+    background: var(--primary-color);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Header Tabs - inline with buttons */
+.header-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+}
+
+.header-tabs .tab-btn {
+    padding: 10px 20px;
+    background: #F1F5F9;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.header-tabs .tab-btn:hover {
+    background: #E2E8F0;
+    color: var(--text-primary);
+}
+
+.header-tabs .tab-btn.active {
+    background: var(--primary-color);
+    color: white;
+}
 
 /* Card Component */
 .card {
@@ -784,11 +850,10 @@ table[data-preview-expanded="true"] .preview-detail {
 }
 
 .multi-select-trigger {
-    width: 100%;
-    padding: 10px 14px;
-    border-radius: 8px;
+    padding: 8px 12px;
     border: 1px solid var(--border-color);
-    background: #fff;
+    border-radius: var(--radius-md);
+    background: white;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -796,6 +861,13 @@ table[data-preview-expanded="true"] .preview-detail {
     font-size: 14px;
     color: var(--text-primary);
     transition: var(--transition);
+    min-width: 160px;
+}
+
+.multi-select.disabled .multi-select-trigger {
+    background: #F1F5F9;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
 .multi-select-trigger:hover {
@@ -1108,6 +1180,23 @@ td.hidden-col.visible {
 .upload-actions {
     display: flex;
     justify-content: flex-end;
+    gap: 12px;
+}
+
+.btn-cancel {
+    background: #F3F4F6;
+    color: var(--text-secondary);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-cancel:hover {
+    background: #E5E7EB;
 }
 
 .btn-confirm-upload {
