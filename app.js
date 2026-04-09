@@ -412,11 +412,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${item.winCount}</td>
             <td>${item.withdrawRatio}</td>
             <td>${item.auditFailFee}</td>
-            <td class="recharge-type" ${currentTab !== 'promotion' ? 'style="display:none"' : ''}>${item.template === '充值優惠活動' ? item.rechargeType : '--'}</td>
-            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none"' : ''}>${item.template === '充值優惠活動' ? item.minRechargeAmount : '--'}</td>
-            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none"' : ''}>${item.template === '充值優惠活動' ? item.minRechargeCount : '--'}</td>
-            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none"' : ''}>${item.template === '充值優惠活動' ? (item.rechargeCategory || '--') : '--'}</td>
-            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none"' : ''}>${item.template === '充值優惠活動' ? (item.rechargeSort ? `<span class="recharge-sort-number">${item.rechargeSort}</span>` : '--') : '--'}</td>
+            <td class="recharge-type" ${currentTab !== 'promotion' ? 'style="display:none !important"' : ''}>${item.template === '充值優惠活動' ? item.rechargeType : '--'}</td>
+            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none !important"' : ''}>${item.template === '充值優惠活動' ? item.minRechargeAmount : '--'}</td>
+            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none !important"' : ''}>${item.template === '充值優惠活動' ? item.minRechargeCount : '--'}</td>
+            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none !important"' : ''}>${item.template === '充值優惠活動' ? (item.rechargeCategory || '--') : '--'}</td>
+            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none !important"' : ''}>${item.template === '充值優惠活動' ? (item.rechargeSort ? `<span class="recharge-sort-number">${item.rechargeSort}</span>` : '--') : '--'}</td>
             <td>
                 <div class="row-actions">
                     <span class="action-btn btn-close">关闭</span>
