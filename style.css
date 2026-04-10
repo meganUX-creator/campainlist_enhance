@@ -555,6 +555,154 @@ table[data-preview-expanded="true"] .preview-detail {
     display: table-cell !important;
 }
 
+/* Preview main column (always visible, narrow) */
+.preview-main-col {
+    width: 10px;
+    padding: 0 !important;
+    border-right: none !important;
+}
+
+/* Preview sub-column styling */
+td.preview-detail, td.recharge-detail {
+    text-align: center;
+    vertical-align: middle;
+    min-width: 90px;
+    background: #FAFCFF;
+}
+
+th.preview-detail, th.recharge-detail {
+    text-align: center;
+    background: #EEF4FF !important;
+    color: #3B6AE0 !important;
+    font-size: 11px;
+    white-space: nowrap;
+    padding: 10px 12px;
+}
+
+/* Image placeholder cell inside table */
+.preview-img-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preview-img-placeholder {
+    position: relative;
+    width: 60px;
+    height: 44px;
+    border: 1.5px dashed #CBD5E1;
+    border-radius: 6px;
+    background: #F8FAFC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    color: #94A3B8;
+}
+
+.preview-img-placeholder:hover {
+    border-color: var(--primary-color);
+    background: #EFF6FF;
+    color: var(--primary-color);
+}
+
+.preview-img-placeholder > i {
+    font-size: 20px;
+}
+
+/* Circular + button overlaid on top-right of cell */
+.btn-preview-plus {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 10px;
+    transition: all 0.2s;
+    padding: 0;
+    box-shadow: 0 2px 6px rgba(47, 146, 255, 0.4);
+    pointer-events: none;
+}
+
+.preview-img-placeholder:hover .btn-preview-plus {
+    background: #1a6fe6;
+    transform: scale(1.15);
+}
+
+/* Uploaded Image Cell inside table */
+.preview-img-uploaded {
+    position: relative;
+    width: 60px;
+    height: 44px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.preview-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.preview-img-uploaded .btn-preview-edit {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1.5px solid var(--border-color);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: all 0.2s;
+    padding: 0;
+    pointer-events: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.preview-img-uploaded:hover .btn-preview-edit {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    transform: scale(1.15);
+}
+
+.preview-img-uploaded:hover .preview-thumbnail {
+    opacity: 0.85;
+}
+
+/* Dash for non-recharge templates */
+.no-image-dash {
+    color: #CBD5E1;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+/* Template type expand/collapse - control activity type and sort columns */
+.hidden-col {
+    display: none;
+}
+
+table[data-template-expanded="true"] .hidden-col {
+    display: table-cell !important;
+}
+
 .expand-header {
     cursor: pointer;
     background-color: #F8FAFC !important;
@@ -571,6 +719,16 @@ table[data-preview-expanded="true"] .preview-detail {
     margin-left: 4px;
     font-size: 16px;
     vertical-align: middle;
+}
+
+/* Column alignment for expand headers and recharge type cells */
+th.expand-header {
+    text-align: center;
+}
+
+.recharge-type {
+    text-align: center;
+    font-weight: 500;
 }
 
 /* Image Modal Styles */
@@ -1071,18 +1229,6 @@ table[data-preview-expanded="true"] .preview-detail {
     font-size: 18px;
     font-weight: 600;
     color: #475569;
-}
-
-/* Hidden columns - collapsed state */
-th.hidden-col,
-td.hidden-col {
-    display: none;
-}
-
-/* When expanded */
-th.hidden-col.visible,
-td.hidden-col.visible {
-    display: table-cell;
 }
 
 /* Upload Image Modal Styles */

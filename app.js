@@ -213,7 +213,9 @@ document.addEventListener('DOMContentLoaded', () => {
             rechargeCategory: '累充',
             minRechargeAmount: '100,000',
             minRechargeCount: '2',
-            rechargeSort: '2'
+            rechargeSort: '2',
+            h5Image: 'https://picsum.photos/100/50?random=1',
+            pcImage: 'https://picsum.photos/150/50?random=2'
         },
         {
             id: '50510',
@@ -236,7 +238,8 @@ document.addEventListener('DOMContentLoaded', () => {
             rechargeCategory: '首充',
             minRechargeAmount: '50,000',
             minRechargeCount: '1',
-            rechargeSort: '3'
+            rechargeSort: '3',
+            h5Image: 'https://picsum.photos/100/50?random=3'
         },
         {
             id: '50520',
@@ -287,7 +290,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // State Management
-    let isRechargeExpanded = false;
+    let isTemplateExpanded = false;
+    let isRechargeTypeExpanded = false;
     let sortConfig = { key: null, direction: 'asc' };
 
     // Code Mapping for Sorting (Priority: SY > SN > CU, then trailing number ascending)
@@ -310,6 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const tableBody = document.getElementById('campaignTableBody');
+    const featuredTableBody = document.getElementById('featuredTableBody');
 
     // Helper to get display type and badge
     const getTypeDisplay = (type) => {
@@ -341,13 +346,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Render Table Rows
     const renderTable = (data) => {
-        tableBody.innerHTML = '';
-
-        // Display actual sort values to show sorting effect
-        data.forEach(item => {
-            item.displaySort = item.sort;
-            renderRow(item);
-        });
+        if (currentTab === 'promotion') {
+            tableBody.innerHTML = '';
+            data.forEach(item => {
+                item.displaySort = item.sort;
+                renderPromotionRow(item);
+            });
+        } else {
+            featuredTableBody.innerHTML = '';
+            data.forEach(item => {
+                item.displaySort = item.sort;
+                renderFeaturedRow(item);
+            });
+        }
 
         // Restore column visibility state
         updateColumnVisibility();
@@ -365,7 +376,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const renderRow = (item) => {
+    // Check if template is a recharge-type activity
+    const isRechargeTemplate = (template) => {
+        const rechargeTemplates = ['充值優惠活動', '充值优惠活动', '周充值优惠活动'];
+        return rechargeTemplates.some(t => template && template.includes('充值'));
+    };
+
+    // Render a preview image cell with + button for uploading, or an existing image with an edit button
+    const renderPreviewImageCell = (item, imageType) => {
+        const label = imageType === 'h5' ? 'H5' : 'PC';
+        const imgUrl = imageType === 'h5' ? item.h5Image : item.pcImage;
+
+        if (imgUrl) {
+            return `
+                <div class="preview-img-cell">
+                    <div class="preview-img-uploaded" onclick="openPreviewUpload('${item.id}', '${imageType}')" title="重新上传${label}图片">
+                        <img src="${imgUrl}" alt="${label}图片" class="preview-thumbnail" />
+                        <button class="btn-preview-edit">
+                            <i class="ph ph-pencil-simple"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        return `
+            <div class="preview-img-cell">
+                <div class="preview-img-placeholder" onclick="openPreviewUpload('${item.id}', '${imageType}')">
+                    <i class="ph ph-image"></i>
+                    <button class="btn-preview-plus" title="上传${label}图片">
+                        <i class="ph ph-plus"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+    };
+
+    const renderPromotionRow = (item) => {
         const { badgeClass, displayType } = getTypeDisplay(item.type);
         const statusClass = item.status === 'active' ? 'status-active' : 'status-inactive';
         const statusIcon = item.status === 'active' ? 'ph ph-check' : 'ph ph-x';
@@ -377,42 +424,32 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${item.currency}</td>
             <td>${item.language}</td>
             <td><span class="badge ${badgeClass}">${displayType}</span></td>
-            ${currentTab === 'promotion' ? `<td class="hidden-col">${item.activityType || '-'}</td>` : ''}
+            <td class="hidden-col">${item.activityType || '-'}</td>
             <td class="hidden-col"><span class="sort-number" data-id="${item.id}">${item.displaySort}</span></td>
             <td>${item.template}</td>
             <td>${item.name}</td>
-            <td class="preview-images-cell">
+            <td class="preview-main-col">
                 <button class="btn btn-upload" onclick="openAssetDrawer('${item.id}')">
                     <i class="ph ph-upload-simple"></i>
                     上傳
                 </button>
-                ${item.template === '充值優惠活動' ? `
-                <div class="preview-images-wrapper">
-                    <div class="image-upload-wrapper">
-                        <img src="pc_list.png" class="thumbnail-preview" alt="PC Preview">
-                        <button class="btn-upload-plus" onclick="openImageUpload('${item.id}', 'pc')">
-                            <i class="ph ph-plus"></i>
-                        </button>
-                    </div>
-                    <div class="image-upload-wrapper">
-                        <img src="h5_list.png" class="thumbnail-preview" alt="H5 Preview">
-                        <button class="btn-upload-plus" onclick="openImageUpload('${item.id}', 'h5')">
-                            <i class="ph ph-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                ` : ''}
+            </td>
+            <td class="preview-detail">
+                ${isRechargeTemplate(item.template) ? renderPreviewImageCell(item, 'h5') : '<span class="no-image-dash">—</span>'}
+            </td>
+            <td class="preview-detail">
+                ${isRechargeTemplate(item.template) ? renderPreviewImageCell(item, 'pc') : '<span class="no-image-dash">—</span>'}
             </td>
             <td>${item.blacklist}</td>
             <td>${item.designatedAgent}</td>
             <td>${item.winCount}</td>
             <td>${item.withdrawRatio}</td>
             <td>${item.auditFailFee}</td>
-            <td class="recharge-type" ${currentTab !== 'promotion' ? 'style="display:none !important"' : ''}>${item.template === '充值優惠活動' ? item.rechargeType : '--'}</td>
-            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none !important"' : ''}>${item.template === '充值優惠活動' ? item.minRechargeAmount : '--'}</td>
-            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none !important"' : ''}>${item.template === '充值優惠活動' ? item.minRechargeCount : '--'}</td>
-            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none !important"' : ''}>${item.template === '充值優惠活動' ? (item.rechargeCategory || '--') : '--'}</td>
-            <td class="recharge-detail" ${currentTab !== 'promotion' ? 'style="display:none !important"' : ''}>${item.template === '充值優惠活動' ? (item.rechargeSort ? `<span class="recharge-sort-number">${item.rechargeSort}</span>` : '--') : '--'}</td>
+            <td class="recharge-main-col">${isRechargeTemplate(item.template) ? (item.rechargeType || '-') : '<span class="no-image-dash">—</span>'}</td>
+            <td class="recharge-detail">${isRechargeTemplate(item.template) ? (item.minRechargeAmount || '-') : '<span class="no-image-dash">—</span>'}</td>
+            <td class="recharge-detail">${isRechargeTemplate(item.template) ? (item.minRechargeCount || '-') : '<span class="no-image-dash">—</span>'}</td>
+            <td class="recharge-detail">${isRechargeTemplate(item.template) ? (item.rechargeCategory || '-') : '<span class="no-image-dash">—</span>'}</td>
+            <td class="recharge-detail">${isRechargeTemplate(item.template) ? `<span class="sort-number">${item.rechargeSort || '-'}</span>` : '<span class="no-image-dash">—</span>'}</td>
             <td>
                 <div class="row-actions">
                     <span class="action-btn btn-close">关闭</span>
@@ -423,6 +460,43 @@ document.addEventListener('DOMContentLoaded', () => {
             </td>
         `;
         tableBody.appendChild(row);
+    };
+
+    const renderFeaturedRow = (item) => {
+        const { badgeClass, displayType } = getTypeDisplay(item.type);
+        const statusClass = item.status === 'active' ? 'status-active' : 'status-inactive';
+        const statusIcon = item.status === 'active' ? 'ph ph-check' : 'ph ph-x';
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.id}</td>
+            <td><div class="${statusClass}"><i class="${statusIcon}"></i></div></td>
+            <td style="font-size: 11px;">${item.period}</td>
+            <td>${item.currency}</td>
+            <td>${item.language}</td>
+            <td><span class="badge ${badgeClass}">${displayType}</span></td>
+            <td>${item.template}</td>
+            <td>${item.name}</td>
+            <td>
+                <button class="btn btn-upload" onclick="openAssetDrawer('${item.id}')">
+                    <i class="ph ph-upload-simple"></i>
+                    上傳
+                </button>
+            </td>
+            <td>${item.blacklist}</td>
+            <td>${item.designatedAgent}</td>
+            <td>${item.winCount}</td>
+            <td>${item.withdrawRatio}</td>
+            <td>${item.auditFailFee}</td>
+            <td>
+                <div class="row-actions">
+                    <span class="action-btn btn-close">关闭</span>
+                    <span class="action-btn btn-copy">复制</span>
+                    <span class="action-btn btn-edit">编辑</span>
+                    <span class="action-btn btn-delete">删除</span>
+                </div>
+            </td>
+        `;
+        featuredTableBody.appendChild(row);
     };
 
     // Function to initialize separate data for each tab
@@ -562,44 +636,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 800);
     });
 
-    // Recharge Toggle Logic
-    const rechargeToggle = document.getElementById('rechargeToggle');
-    const campaignTable = document.getElementById('campaignTable');
-    
-    // Initial state check
-    campaignTable.setAttribute('data-recharge-expanded', isRechargeExpanded);
-
-    rechargeToggle.addEventListener('click', () => {
-        isRechargeExpanded = !isRechargeExpanded;
-        const icon = rechargeToggle.querySelector('i');
-        icon.className = isRechargeExpanded ? 'ph ph-minus-circle' : 'ph ph-plus-circle';
-        
-        campaignTable.setAttribute('data-recharge-expanded', isRechargeExpanded);
-    });
-
-    // Preview Detail Toggle Logic
+    // Preview Image Expand Toggle Logic
     let isPreviewExpanded = false;
-    const previewPlusToggle = document.getElementById('previewPlusToggle');
-    campaignTable.setAttribute('data-preview-expanded', isPreviewExpanded);
-
-    previewPlusToggle.addEventListener('click', () => {
-        isPreviewExpanded = !isPreviewExpanded;
-        const icon = previewPlusToggle.querySelector('i');
-        icon.className = isPreviewExpanded ? 'ph ph-minus-circle' : 'ph ph-plus-circle';
+    const campaignTable = document.getElementById('campaignTable');
+    if (campaignTable) {
         campaignTable.setAttribute('data-preview-expanded', isPreviewExpanded);
-    });
+    }
 
     // Template Type Expand Toggle Logic (for Activity Type and Sort columns)
     const templateTypeExpand = document.getElementById('templateTypeExpand');
+    
+    // Initial state setup
+    if (campaignTable) {
+        campaignTable.setAttribute('data-template-expanded', isTemplateExpanded);
+    }
 
     templateTypeExpand.addEventListener('click', () => {
-        isTemplateColumnsExpanded = !isTemplateColumnsExpanded;
+        isTemplateExpanded = !isTemplateExpanded;
         const icon = templateTypeExpand.querySelector('i');
-        icon.className = isTemplateColumnsExpanded ? 'ph ph-minus-circle' : 'ph ph-plus-circle';
-
-        // Toggle column visibility
-        updateColumnVisibility();
+        icon.className = isTemplateExpanded ? 'ph ph-minus-circle' : 'ph ph-plus-circle';
+        
+        // Update table attribute for CSS control
+        campaignTable.setAttribute('data-template-expanded', isTemplateExpanded);
     });
+
+    // Preview Image Expand Toggle
+    const previewImgExpand = document.getElementById('previewImgExpand');
+    if (previewImgExpand) {
+        previewImgExpand.addEventListener('click', () => {
+            isPreviewExpanded = !isPreviewExpanded;
+            const icon = previewImgExpand.querySelector('i');
+            icon.className = isPreviewExpanded ? 'ph ph-minus-circle' : 'ph ph-plus-circle';
+            campaignTable.setAttribute('data-preview-expanded', isPreviewExpanded);
+        });
+    }
+
+    // Recharge Type Expand Toggle Logic
+    const rechargeTypeExpand = document.getElementById('rechargeTypeExpand');
+    if (rechargeTypeExpand) {
+        campaignTable.setAttribute('data-recharge-expanded', isRechargeTypeExpanded);
+        rechargeTypeExpand.addEventListener('click', () => {
+            isRechargeTypeExpanded = !isRechargeTypeExpanded;
+            const icon = rechargeTypeExpand.querySelector('i');
+            icon.className = isRechargeTypeExpanded ? 'ph ph-minus-circle' : 'ph ph-plus-circle';
+            campaignTable.setAttribute('data-recharge-expanded', isRechargeTypeExpanded);
+        });
+    }
 
     // Asset Drawer Logic
     const assetDrawer = document.getElementById('assetDrawer');
@@ -624,6 +706,23 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('urlInput').value = '';
         
         // Show modal
+        const modal = document.getElementById('uploadImageModal');
+        modal.classList.add('show');
+    };
+
+    // Open preview upload modal (triggered from table + button)
+    window.openPreviewUpload = (campaignId, imageType) => {
+        const typeLabel = imageType === 'pc' ? 'PC' : 'H5';
+        const labelText = imageType === 'pc' ? '充值PC圖片:' : '充值H5圖片:';
+
+        document.getElementById('uploadModalTitle').textContent = `上傳${typeLabel}充值圖片`;
+        document.getElementById('uploadLabel').textContent = labelText;
+
+        window.currentUpload = { id: campaignId, type: imageType };
+
+        document.getElementById('fileInput').value = '';
+        document.getElementById('urlInput').value = '';
+
         const modal = document.getElementById('uploadImageModal');
         modal.classList.add('show');
     };
@@ -922,25 +1021,6 @@ document.addEventListener('DOMContentLoaded', () => {
             templateTypeFilterItem.style.display = currentTab === 'promotion' ? 'block' : 'none';
         }
 
-        // Show/hide activity type column based on tab (hide for featured tab)
-        const activityTypeHeader = document.getElementById('activityTypeHeader');
-        if (activityTypeHeader) {
-            activityTypeHeader.style.display = currentTab === 'promotion' ? 'table-cell' : 'none';
-        }
-
-        // Show/hide recharge columns based on tab (hide for featured tab)
-        const rechargeToggle = document.getElementById('rechargeToggle');
-        const rechargeMinAmountHeader = document.getElementById('rechargeMinAmountHeader');
-        const rechargeMinCountHeader = document.getElementById('rechargeMinCountHeader');
-        const rechargeCategoryHeader = document.getElementById('rechargeCategoryHeader');
-        const rechargeSortHeader = document.getElementById('rechargeSortHeader');
-        
-        const display = currentTab === 'promotion' ? 'table-cell' : 'none';
-        if (rechargeToggle) rechargeToggle.style.display = display;
-        if (rechargeMinAmountHeader) rechargeMinAmountHeader.style.display = display;
-        if (rechargeMinCountHeader) rechargeMinCountHeader.style.display = display;
-        if (rechargeCategoryHeader) rechargeCategoryHeader.style.display = display;
-        if (rechargeSortHeader) rechargeSortHeader.style.display = display;
     };
 
     // Function to disable/enable activity template based on template type selection
@@ -989,6 +1069,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Update activity template dropdown options
             updateActivityTemplateOptions();
+
+            // Toggle table containers
+            const promotionCont = document.getElementById('promotionTableContainer');
+            const featuredCont = document.getElementById('featuredTableContainer');
+            if (currentTab === 'promotion') {
+                if (promotionCont) promotionCont.style.display = 'block';
+                if (featuredCont) featuredCont.style.display = 'none';
+            } else {
+                if (promotionCont) promotionCont.style.display = 'none';
+                if (featuredCont) featuredCont.style.display = 'block';
+            }
 
             // Get data for new tab and render (each tab has independent data)
             const tabData = getCurrentTabData();
