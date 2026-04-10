@@ -290,7 +290,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // State Management
-    let isTemplateExpanded = false;
     let isRechargeTypeExpanded = false;
     let sortConfig = { key: null, direction: 'asc' };
 
@@ -334,9 +333,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return { badgeClass, displayType, group };
     };
 
-    // Track if activity type and sort columns are expanded
-    let isTemplateColumnsExpanded = false;
-
     // Track current tab (promotion or featured)
     let currentTab = 'promotion';
     
@@ -359,21 +355,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderFeaturedRow(item);
             });
         }
-
-        // Restore column visibility state
-        updateColumnVisibility();
-    };
-
-    // Helper function to update column visibility based on expanded state
-    const updateColumnVisibility = () => {
-        const hiddenCols = document.querySelectorAll('th.hidden-col, td.hidden-col');
-        hiddenCols.forEach(col => {
-            if (isTemplateColumnsExpanded) {
-                col.classList.add('visible');
-            } else {
-                col.classList.remove('visible');
-            }
-        });
     };
 
     // Check if template is a recharge-type activity
@@ -424,8 +405,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${item.currency}</td>
             <td>${item.language}</td>
             <td><span class="badge ${badgeClass}">${displayType}</span></td>
-            <td class="hidden-col">${item.activityType || '-'}</td>
-            <td class="hidden-col"><span class="sort-number" data-id="${item.id}">${item.displaySort}</span></td>
+            <td>${item.activityType || '-'}</td>
+            <td><span class="sort-number" data-id="${item.id}">${item.displaySort}</span></td>
             <td>${item.template}</td>
             <td>${item.name}</td>
             <td class="preview-main-col">
@@ -474,6 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${item.currency}</td>
             <td>${item.language}</td>
             <td><span class="badge ${badgeClass}">${displayType}</span></td>
+            <td><span class="sort-number">${item.displaySort}</span></td>
             <td>${item.template}</td>
             <td>${item.name}</td>
             <td>
@@ -642,23 +624,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (campaignTable) {
         campaignTable.setAttribute('data-preview-expanded', isPreviewExpanded);
     }
-
-    // Template Type Expand Toggle Logic (for Activity Type and Sort columns)
-    const templateTypeExpand = document.getElementById('templateTypeExpand');
-    
-    // Initial state setup
-    if (campaignTable) {
-        campaignTable.setAttribute('data-template-expanded', isTemplateExpanded);
-    }
-
-    templateTypeExpand.addEventListener('click', () => {
-        isTemplateExpanded = !isTemplateExpanded;
-        const icon = templateTypeExpand.querySelector('i');
-        icon.className = isTemplateExpanded ? 'ph ph-minus-circle' : 'ph ph-plus-circle';
-        
-        // Update table attribute for CSS control
-        campaignTable.setAttribute('data-template-expanded', isTemplateExpanded);
-    });
 
     // Preview Image Expand Toggle
     const previewImgExpand = document.getElementById('previewImgExpand');
