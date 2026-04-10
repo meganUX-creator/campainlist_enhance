@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,13 +13,14 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="app-container">
         <!-- Header Actions -->
         <header class="page-header">
             <h1 class="page-title"></h1>
         </header>
-        
+
         <!-- Tab Navigation and Actions Row -->
         <div class="header-toolbar">
             <div class="tab-navigation header-tabs">
@@ -26,7 +28,8 @@
                 <button class="tab-btn" data-tab="featured">推薦精選活動</button>
             </div>
             <div class="header-actions">
-                <button class="btn btn-primary" id="addCampaign" onclick="window.open('https://lunar-aroma-66559924.figma.site/', '_blank')">
+                <button class="btn btn-primary" id="addCampaign"
+                    onclick="window.open('https://lunar-aroma-66559924.figma.site/', '_blank')">
                     <i class="ph ph-plus"></i>
                     新增活动
                 </button>
@@ -46,7 +49,7 @@
                 </div>
                 <i class="ph ph-caret-up toggle-icon"></i>
             </div>
-            
+
             <div class="filter-body">
                 <div class="filter-grid">
                     <div class="filter-item">
@@ -124,7 +127,8 @@
                             <th>币种</th>
                             <th>语系</th>
                             <th class="sortable" id="templateTypeExpand">模板类型</th>
-                            <th class="sortable" data-sort="activityType" id="activityTypeHeader">活动类型 <i class="ph ph-caret-up-down"></i></th>
+                            <th class="sortable" data-sort="activityType" id="activityTypeHeader">活动类型 <i
+                                    class="ph ph-caret-up-down"></i></th>
                             <th class="sortable" data-sort="sort">排序 <i class="ph ph-caret-up-down"></i></th>
                             <th>活动模板</th>
                             <th>活动名称</th>
@@ -137,11 +141,13 @@
                             <th>到达 / 中奖人数</th>
                             <th>提现稽核流水比例</th>
                             <th>稽核不通过手续费比例</th>
-                            <th class="expand-header" id="rechargeTypeExpand">充值類型 <i class="ph ph-plus-circle"></i></th>
+                            <th class="expand-header" id="rechargeTypeExpand">充值類型 <i class="ph ph-plus-circle"></i>
+                            </th>
                             <th class="recharge-detail" id="rechargeAmountHeader">最低充值金额</th>
                             <th class="recharge-detail" id="rechargeCountHeader">最低充值次数</th>
                             <th class="recharge-detail" id="rechargeCategoryHeader">充值类别</th>
-                            <th class="recharge-detail sortable" data-sort="rechargeSort" id="rechargeSortHeader">充值排序 <i class="ph ph-caret-up-down"></i></th>
+                            <th class="recharge-detail sortable" data-sort="rechargeSort" id="rechargeSortHeader">充值排序
+                                <i class="ph ph-caret-up-down"></i></th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -324,14 +330,26 @@
         </div>
         <div class="drawer-content">
             <div class="campaign-info-grid">
-                <div class="info-item"><span>前台显示名称</span><p id="infoName">--</p></div>
-                <div class="info-item"><span>ID</span><p id="infoId">--</p></div>
-                <div class="info-item"><span>类型</span><p id="infoType">--</p></div>
-                <div class="info-item"><span>时间</span><p id="infoTime">--</p></div>
-                <div class="info-item"><span>模板类型</span><p id="infoTemplate">--</p></div>
-                <div class="info-item"><span>币种</span><p id="infoCurrency">--</p></div>
+                <div class="info-item"><span>前台显示名称</span>
+                    <p id="infoName">--</p>
+                </div>
+                <div class="info-item"><span>ID</span>
+                    <p id="infoId">--</p>
+                </div>
+                <div class="info-item"><span>类型</span>
+                    <p id="infoType">--</p>
+                </div>
+                <div class="info-item"><span>时间</span>
+                    <p id="infoTime">--</p>
+                </div>
+                <div class="info-item"><span>模板类型</span>
+                    <p id="infoTemplate">--</p>
+                </div>
+                <div class="info-item"><span>币种</span>
+                    <p id="infoCurrency">--</p>
+                </div>
             </div>
-            
+
             <table class="asset-table">
                 <thead>
                     <tr>
@@ -381,4 +399,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>

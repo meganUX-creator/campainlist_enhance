@@ -604,9 +604,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Mock Button Interactions
-    document.getElementById('addCampaign').addEventListener('click', () => {
-        alert('新增活动触发 - 你可以开发一个弹窗来新增活动！');
-    });
 
     document.getElementById('refreshPage').addEventListener('click', () => {
         const btn = document.getElementById('refreshPage');
