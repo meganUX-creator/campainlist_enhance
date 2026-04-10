@@ -1360,3 +1360,113 @@ th.expand-header {
 .btn-confirm-upload:hover {
     background: #095C5F;
 }
+
+/* Pagination Styling */
+.pagination-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 0 8px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.pagination-total {
+    margin-right: -4px;
+    color: #64748b;
+}
+
+.page-size-select {
+    padding: 8px 32px 8px 12px;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    background: white;
+    appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 256 256'%3E%3Cpath fill='%2394a3b8' d='M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80a8,8,0,0,1,11.32-11.32L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    color: #475569;
+    font-size: 14px;
+    transition: all 0.2s;
+    min-width: 110px;
+}
+
+.page-size-select:hover {
+    border-color: #3B82F6;
+}
+
+.pagination-pages {
+    display: flex;
+    align-items: center;
+    margin: 0 4px;
+    gap: 2px;
+}
+
+.btn-page-num, .btn-page-arrow {
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    padding: 0 4px;
+}
+
+.btn-page-arrow {
+    color: #CBD5E1;
+}
+
+.btn-page-arrow:hover {
+    color: #94A3B8;
+}
+
+.btn-page-num.active {
+    color: #3B82F6;
+    font-weight: 700;
+}
+
+.btn-page-num:hover:not(.active) {
+    color: #3B82F6;
+    background: #F8FAFC;
+}
+
+.pagination-jump {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #64748b;
+    margin-left: 4px;
+}
+
+.page-jump-input {
+    width: 50px;
+    height: 36px;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    padding: 0 4px;
+    color: #475569;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.page-jump-input:focus {
+    outline: none;
+    border-color: #3B82F6;
+}
+
+.page-jump-input::-webkit-inner-spin-button,
+.page-jump-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
