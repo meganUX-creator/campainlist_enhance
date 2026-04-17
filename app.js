@@ -616,7 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Preview Image Expand Toggle Logic
-    let isPreviewExpanded = false;
+    let isPreviewExpanded = true;
     const campaignTable = document.getElementById('campaignTable');
     if (campaignTable) {
         campaignTable.setAttribute('data-preview-expanded', isPreviewExpanded);
