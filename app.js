@@ -1033,7 +1033,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to disable/enable activity template based on template type selection
     const updateActivityTemplateState = () => {
-        const selectedType = templateTypeFilter.value;
+        const selectedType = templateTypeFilter ? templateTypeFilter.value : '';
         if (selectedType === 'CU') {
             // Disable activity template when '自定义' is selected
             activityTemplateFilterContainer.classList.add('disabled');
@@ -1053,7 +1053,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Template type change listener
-    templateTypeFilter.addEventListener('change', updateActivityTemplateState);
+    if (templateTypeFilter) {
+        templateTypeFilter.addEventListener('change', updateActivityTemplateState);
+    }
 
     // Tab Switching Logic
     const tabButtons = document.querySelectorAll('.tab-btn');
