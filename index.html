@@ -106,25 +106,25 @@
                 </div>
             </div>
         </section>
-＾    <section class="table-section card">
+        ＾ <section class="table-section card">
             <!-- Promotion Tab Table -->
             <div class="table-container" id="promotionTableContainer">
                 <table class="data-table" id="campaignTable" data-preview-expanded="true">
                     <thead>
                         <tr>
-                            <th class="sortable" data-sort="id">ID <i class="ph ph-caret-up-down"></i></th>
+                            <th class="sortable" data-sort="id">ID <span class="sort-icons"><i class="ph ph-arrow-up asc"></i><i class="ph ph-arrow-down desc"></i></span></th>
                             <th>状态</th>
-                            <th class="sortable" data-sort="period">起止时间 <i class="ph ph-caret-up-down"></i></th>
+                            <th class="sortable" data-sort="period">起止时间 <span class="sort-icons"><i class="ph ph-arrow-up asc"></i><i class="ph ph-arrow-down desc"></i></span></th>
                             <th>币种</th>
                             <th>语系</th>
                             <th class="sortable" id="templateTypeExpand">模板类型</th>
-                            <th class="sortable" data-sort="activityType" id="activityTypeHeader">活动类型 <i
-                                    class="ph ph-caret-up-down"></i></th>
-                            <th class="sortable" data-sort="sort">排序 <i class="ph ph-caret-up-down"></i></th>
+                            <th class="sortable" data-sort="activityType" id="activityTypeHeader">活动类型 <span class="sort-icons"><i class="ph ph-arrow-up asc"></i><i class="ph ph-arrow-down desc"></i></span></th>
+                            <th class="sortable" data-sort="sort">排序 <span class="sort-icons"><i class="ph ph-arrow-up asc"></i><i class="ph ph-arrow-down desc"></i></span></th>
                             <th>活动模板</th>
                             <th>活动名称</th>
 
-                            <th class="expand-header" id="previewImgExpand">優惠活動頁圖片 <i class="ph ph-minus-circle"></i></th>
+                            <th class="expand-header" id="previewImgExpand">優惠活動頁圖片 <i class="ph ph-minus-circle"></i>
+                            </th>
                             <th class="preview-detail" id="previewH5Header">充值H5圖片</th>
                             <th class="preview-detail" id="previewPcHeader">充值PC圖片</th>
                             <th>黑名单层级</th>
@@ -138,7 +138,8 @@
                             <th class="recharge-detail" id="rechargeCountHeader">最低充值次数</th>
                             <th class="recharge-detail" id="rechargeCategoryHeader">充值类别</th>
                             <th class="recharge-detail sortable" data-sort="rechargeSort" id="rechargeSortHeader">充值排序
-                                <i class="ph ph-caret-up-down"></i></th>
+                                <span class="sort-icons"><i class="ph ph-arrow-up asc"></i><i class="ph ph-arrow-down desc"></i></span>
+                            </th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -151,15 +152,15 @@
             <!-- Featured Tab Table -->
             <div class="table-container" id="featuredTableContainer" style="display: none;">
                 <table class="data-table" id="featuredTable">
-                    <thead>
+                    <thead>３１
                         <tr>
-                            <th class="sortable" data-sort="id">ID <i class="ph ph-caret-up-down"></i></th>
+                            <th class="sortable" data-sort="id">ID <span class="sort-icons"><i class="ph ph-arrow-up asc"></i><i class="ph ph-arrow-down desc"></i></span></th>
                             <th>状态</th>
-                            <th class="sortable" data-sort="period">起止时间 <i class="ph ph-caret-up-down"></i></th>
+                            <th class="sortable" data-sort="period">起止时间 <span class="sort-icons"><i class="ph ph-arrow-up asc"></i><i class="ph ph-arrow-down desc"></i></span></th>
                             <th>币种</th>
                             <th>语系</th>
                             <th>模板类型</th>
-                            <th class="sortable" data-sort="sort">排序 <i class="ph ph-caret-up-down"></i></th>
+                            <th class="sortable" data-sort="sort">排序 <span class="sort-icons"><i class="ph ph-arrow-up asc"></i><i class="ph ph-arrow-down desc"></i></span></th>
                             <th>活动模板</th>
                             <th>活动名称</th>
                             <th>優惠活動頁圖片</th>
@@ -188,13 +189,13 @@
                     </select>
                 </div>
                 <div class="pagination-pages">
-                    <button class="btn-page-arrow"><i class="ph ph-caret-left"></i></button>
-                    <button class="btn-page-num active">1</button>
-                    <button class="btn-page-num">2</button>
-                    <button class="btn-page-num">3</button>
-                    <button class="btn-page-num">4</button>
-                    <button class="btn-page-num">5</button>
-                    <button class="btn-page-arrow"><i class="ph ph-caret-right"></i></button>
+                    <butt１３on class="btn-page-arrow"><i class="ph ph-caret-left"></i></button>
+                        <button class="btn-page-num active">1</button>
+                        <button class="btn-page-num">2</button>
+                        <button class="btn-page-num">3</button>
+                        <button class="btn-page-num">4</button>
+                        <button class="btn-page-num">5</button>
+                        <button class="btn-page-arrow"><i class="ph ph-caret-right"></i></button>
                 </div>
                 <div class="pagination-jump">
                     前往 <input type="number" class="page-jump-input" value="1"> 页
@@ -318,44 +319,33 @@
                 </button>
                 <button class="btn-confirm" onclick="saveAssets()">确认</button>
             </div>
+        </div>３
+        <div class="info-item"><span>时间</span>
+            <p id="infoTime">--</p>
         </div>
-        <div class="drawer-content">
-            <div class="campaign-info-grid">
-                <div class="info-item"><span>前台显示名称</span>
-                    <p id="infoName">--</p>
-                </div>
-                <div class="info-item"><span>ID</span>
-                    <p id="infoId">--</p>
-                </div>
-                <div class="info-item"><span>类型</span>
-                    <p id="infoType">--</p>
-                </div>
-                <div class="info-item"><span>时间</span>
-                    <p id="infoTime">--</p>
-                </div>
-                <div class="info-item"><span>模板类型</span>
-                    <p id="infoTemplate">--</p>
-                </div>
-                <div class="info-item"><span>币种</span>
-                    <p id="infoCurrency">--</p>
-                </div>
-            </div>
+        <div class="info-item"><span>模板类型</span>
+            <p id="infoTemplate">--</p>
+        </div>
+        <div class="info-item"><span>币种</span>
+            <p id="infoCurrency">--</p>
+        </div>
+    </div>
 
-            <table class="asset-table">
-                <thead>
-                    <tr>
-                        <th>语系</th>
-                        <th>PC端列表图片</th>
-                        <th>PC端内容图片</th>
-                        <th>H5端列表图片</th>
-                        <th>H5端内容图片</th>
-                    </tr>
-                </thead>
-                <tbody id="assetTableBody">
-                    <!-- Assets will be rendered here -->
-                </tbody>
-            </table>
-        </div>
+    <table class="asset-table">
+        <thead>
+            <tr>
+                <th>语系</th>
+                <th>PC端列表图片</th>
+                <th>PC端内容图片</th>
+                <th>H5端列表图片</th>
+                <th>H5端内容图片</th>
+            </tr>
+        </thead>
+        <tbody id="assetTableBody">
+            <!-- Assets will be rendered here -->
+        </tbody>
+    </table>
+    </div>
     </div>
 
     <div id="imageModal" class="image-modal">
@@ -391,4 +381,4 @@
     <script src="app.js"></script>
 </body>
 
-</html>
+</html>１１３

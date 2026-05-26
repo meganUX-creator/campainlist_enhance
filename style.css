@@ -388,9 +388,40 @@ body {
 
 .data-table th i { margin-left: 4px; font-size: 12px; opacity: 0.5; transition: var(--transition); }
 
+.sort-icons {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-left: 4px;
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    transition: background-color var(--transition);
+}
+
+.sort-icons i {
+    margin-left: 0 !important;
+    transition: color var(--transition), opacity var(--transition);
+}
+
+.sort-icons i.active {
+    opacity: 1 !important;
+    color: var(--primary-color) !important;
+}
+
 th.sortable { cursor: pointer; user-select: none; }
 th.sortable:hover { background-color: #E2E8F0; }
-th.sortable i.ph-caret-up, th.sortable i.ph-caret-down { opacity: 1; color: var(--primary-color); }
+
+th.sortable:hover .sort-icons {
+    background-color: rgba(47, 146, 255, 0.15);
+}
+
+th.sortable:hover .sort-icons i {
+    opacity: 1 !important;
+    color: var(--primary-color) !important;
+}
 
 .data-table td {
     padding: 16px;
